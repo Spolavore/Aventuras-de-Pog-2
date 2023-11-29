@@ -65,7 +65,6 @@ public class KeyboardInputs implements KeyListener  {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
 
 
-         // seta a ultima tecla clicada pelo usuario
 
         // previsao de movimentação do player
         player.setMoving(true);

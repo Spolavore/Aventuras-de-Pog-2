@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame{
@@ -13,9 +16,22 @@ public class GameWindow extends JFrame{
         jframe.setLocationRelativeTo(null); // coloca o janela no centro da tela do usuário
         jframe.setResizable(false);
         jframe.pack();
-
         jframe.setVisible(true);
+        jframe.addWindowFocusListener(new WindowFocusListener() {
 
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                // TODO Auto-generated method stub
+                System.out.println("Bem vindo");
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                // TODO Auto-generated method stub
+                gamePanel.windowLostFocus();
+            }
+            
+        });
     }
 
  

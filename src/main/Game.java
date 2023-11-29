@@ -9,8 +9,11 @@ public class Game implements Runnable {
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
 
+
+
+
     public Game(){
-        this.gamePanel = new GamePanel();
+        this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(gamePanel);
         this.gamePanel.requestFocus(); // faz com que o Panel ( o que está dentro da janela ) receba os inputs do usuário
         startGameLoop();

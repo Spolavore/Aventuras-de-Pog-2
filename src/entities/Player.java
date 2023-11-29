@@ -8,7 +8,10 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import utils.AssetsHandler;
 import utils.Constants.Directions;
+import utils.Constants.Sprites;
+
 
 public class Player extends Entity {
     private GamePanel gamePanel;
@@ -37,7 +40,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g){
-        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 128, 128,null);
+        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 64, 64,null);
     }
 
     // 0 - 5
@@ -52,11 +55,7 @@ public class Player extends Entity {
     }
 
     public void loadAnimations() {
-        // importando imagem 
-        InputStream is = getClass().getResourceAsStream("/char_blue.png");
-        try {
-
-            img = ImageIO.read(is);
+            img = AssetsHandler.LoadAssets(Sprites.PLAYER);
             animations = new BufferedImage[6][8];
             // Pega-se uma subimagem da imagem original (res/char_blue.png)
             // recortando conforme a imagem e colocando as subimagens separada
@@ -64,21 +63,8 @@ public class Player extends Entity {
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 8; j++) {
                     animations[i][j] = img.getSubimage(j * 56, i * 56, 56, 56);
-
                 }
             }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
     private void updateAnimationTick() {
         // Numeros do vetor referem-se a quantas sprites tem cada animação
