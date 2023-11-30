@@ -26,33 +26,44 @@ public abstract class Constants {
         public final static String GROUND_TILE_2 = "/tiles/Tile_11.png";
         public final static String LEFT_GROUND_TILE = "/tiles/Tile_09.png";
         public final static String RIGHT_GROUND_TILE = "/tiles/Tile_12.png";
+        public final static String PLATAFORM_STONE_TILE= "/tiles/Tile_30.png";
+        public final static String LIMITOR= "/tiles/Tile_80.png";
+
     }
 
-    public static class LevelMatri {
+    public static class LevelDefaultAssets {
+        public static String LEVEL_1_FLOOR = Sprites.GROUND_TILE;
+        public static String LEVEL_1_LIMITOR = Sprites.LIMITOR;
+        public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
+
+
+    }
+    public static class LevelMatrix {
         // Como a tela está setada para 1248 672 precisamos de 39 tyles de chão e 21 de
         // altura
-        public static final char[][] Level1Mapa = {
-                "###########################################".toCharArray(),
-                "#                                         #".toCharArray(),
-                "#                                         #".toCharArray(),
-                "#                      ####               #".toCharArray(),
-                "#                      ####               #".toCharArray(),
-                "#                                         #".toCharArray(),
-                "#                                         #".toCharArray(),
-                "#             ####                        #".toCharArray(),
-                "#             ####                        #".toCharArray(),
-                "#               ##                        #".toCharArray(),
-                "#               ##                        #".toCharArray(),
-                "#               ##           ####         #".toCharArray(),
-                "#                             ####        #".toCharArray(),
-                "#                                         #".toCharArray(),
-                "#                                         #".toCharArray(),
-                "#   ####                                  #".toCharArray(),
-                "#   ####                                  #".toCharArray(),
-                "#     ##                                  #".toCharArray(),
-                "#     ##                                  #".toCharArray(),
-                "#     ##                                  #".toCharArray(),
-                "###########################################".toCharArray()
+        public static final char[][] Level1Map = {
+                "#######################################".toCharArray(),
+                "#                                     #".toCharArray(),
+                "#                                     #".toCharArray(),
+                "#                      ####           #".toCharArray(),
+                "#                      ####           #".toCharArray(),
+                "#                                     #".toCharArray(),
+                "#                                     #".toCharArray(),
+                "#             ####                    #".toCharArray(),
+                "#             ####                    #".toCharArray(),
+                "#               ##                    #".toCharArray(),
+                "#               ##                    #".toCharArray(),
+                "#               ##           ####     #".toCharArray(),
+                "#                             ####    #".toCharArray(),
+                "#                                     #".toCharArray(),
+                "#                                     #".toCharArray(),
+                "#   ####                              #".toCharArray(),
+                "#   ####                              #".toCharArray(),
+                "#     ##                              #".toCharArray(),
+                "#     ##                              #".toCharArray(),
+                "#     ##                              #".toCharArray(),
+                "#######################################".toCharArray()
         };
     }
 }
+

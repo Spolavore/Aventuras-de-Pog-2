@@ -21,6 +21,12 @@ public class Player extends Entity {
     private int playerDirection;
     private boolean isMoving = false;
     private BufferedImage img;
+    
+    // As animações possuem 7 tipos, cada uma é uma linha da matriz animations
+    // algumas animações possuem apenas 5 sprites, enquanto outras 8. Esses números
+    // referem-se às colunas da matriz citado
+    // Para saber todas as animações possíveis ir res/char_blue.png
+    
     private BufferedImage[][] animations;
     private int playerAniTick, playerAniIndex,playerAniSpeed = 10;
 
@@ -37,10 +43,11 @@ public class Player extends Entity {
     public void update(){
         updateAnimationTick();
         updatePosition();
+        System.out.println(this.getY());
     }
 
     public void render(Graphics g){
-        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 64, 64,null);
+        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 128, 128,null);
     }
 
     // 0 - 5
@@ -87,7 +94,9 @@ public class Player extends Entity {
         if (this.isMoving()) {
             int playerDirection = this.getDirection();
             if (playerDirection == Directions.DOWN) {
-                this.updateYPosition(1);
+                if(this.getY() < 514){
+                    this.updateYPosition(1);
+                }
                
             } else if (playerDirection == Directions.UP) {
                 this.updateYPosition(-1);

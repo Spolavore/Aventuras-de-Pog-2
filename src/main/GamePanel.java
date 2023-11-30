@@ -7,9 +7,12 @@ import entities.Player;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 import levels.LevelHandler;
+import levels.Level;
+import utils.Constants;
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
 import utils.Constants.Directions.*;
+import utils.Constants.LevelDefaultAssets;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,27 +24,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static utils.Constants.GameDimentions;
-
+import static utils.Constants.LevelMatrix;
 
 public class GamePanel extends JPanel {
     private Game game;
     private Player player;
+    private Level level;
     private MouseInputs mouseInputs;
     private LevelHandler levelHandler;
 
 
-    // As animações possuem 7 tipos, cada uma é uma linha da matriz animations
-    // algumas animações possuem apenas 5 sprites, enquanto outras 8. Esses números
-    // referem-se às colunas da matriz citado
-    // Para saber todas as animações possíveis ir res/char_blue.png
-    
     public GamePanel(Game game){
         mouseInputs = new MouseInputs(this);
-        this.player = new Player(this, 0, 100);
-        levelHandler = new LevelHandler(game);
-        
-        String[] teste = {Sprites.GROUND_TILE,Sprites.GROUND_TILE_2,Sprites.LEFT_GROUND_TILE, Sprites.RIGHT_GROUND_TILE};
-        levelHandler.importLevelSprites(teste);
+        this.player = new Player(this, 0, 514);
+        this.level = new Level(LevelMatrix.Level1Map,game);
+        level.loadMapAssets(LevelDefaultAssets.LEVEL_1_FLOOR, LevelDefaultAssets.LEVEL_1_PLATAFORM, LevelDefaultAssets.LEVEL_1_LIMITOR);
+      
+       
+ 
         player.loadAnimations();
         setPanelSize();
         addKeyListener(new KeyboardInputs(this, this.player));
@@ -54,13 +54,12 @@ public class GamePanel extends JPanel {
   
     public void updateGame(){
         player.update();
-        levelHandler.update();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         player.render(g);
-        levelHandler.drawLevel(g);
+        level.draw(LevelMatrix.Level1Map,g);
     }
 
 
