@@ -16,11 +16,11 @@ import utils.Constants.Sprites;
 public class Player extends Entity {
     private GamePanel gamePanel;
     private int lifes;
-    private int points;
     private int typeOfAnimation;
     private int playerDirection;
     private boolean isMoving = false;
     private BufferedImage img;
+    private boolean[] canMove = {true, true, true, true}; // array que armazena as direções que o player pode se mover 0: W | 1: A | 2: S | 3: D
     
     // As animações possuem 7 tipos, cada uma é uma linha da matriz animations
     // algumas animações possuem apenas 5 sprites, enquanto outras 8. Esses números
@@ -36,18 +36,18 @@ public class Player extends Entity {
         super(x, y);
         this.gamePanel = g;
         this.lifes = 0;
-        this.points = 0;
+       
         loadAnimations();
     }
 
     public void update(){
         updateAnimationTick();
         updatePosition();
-        System.out.println(this.getY());
+        // System.out.println("Player X: " + this.getX() + " Player Y: " + this.getY());
     }
 
     public void render(Graphics g){
-        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 128, 128,null);
+        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 32, 32,null);
     }
 
     // 0 - 5
@@ -91,12 +91,10 @@ public class Player extends Entity {
 
     public void updatePosition() {
 
-        if (this.isMoving()) {
+        if (this.isMoving) {
             int playerDirection = this.getDirection();
             if (playerDirection == Directions.DOWN) {
-                if(this.getY() < 514){
-                    this.updateYPosition(1);
-                }
+                this.updateYPosition(1);
                
             } else if (playerDirection == Directions.UP) {
                 this.updateYPosition(-1);
@@ -122,14 +120,6 @@ public class Player extends Entity {
 
     public void setLifes(int lifes) {
         this.lifes = lifes;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 
     public int getTypeOfAnimation() {
@@ -162,6 +152,11 @@ public class Player extends Entity {
     }
 
 
+    public void setPlayerCanMove(boolean bool, int index){
+        this.canMove[index] = bool;
+    }
 
-
+    public boolean[] canMove(){
+        return this.canMove;
+    }
 }

@@ -6,13 +6,16 @@ import java.awt.event.MouseMotionListener;
 
 import entities.Player;
 import main.GamePanel;
+import physics.Collisions;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
     private GamePanel gamePanel;
     private Player player;
+
     public MouseInputs(GamePanel gamePanel){
         this.gamePanel = gamePanel;
+
     }
     @Override
     public void mouseDragged(MouseEvent e) {

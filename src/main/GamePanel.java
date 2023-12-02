@@ -7,12 +7,15 @@ import entities.Player;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 import levels.LevelHandler;
+import physics.Collisions;
 import levels.Level;
 import utils.Constants;
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
 import utils.Constants.Directions.*;
+import utils.Constants.GameDimentions;
 import utils.Constants.LevelDefaultAssets;
+import utils.Constants.LevelMatrix;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,28 +35,32 @@ public class GamePanel extends JPanel {
     private Level level;
     private MouseInputs mouseInputs;
     private LevelHandler levelHandler;
-
+    private Collisions collisions;
 
     public GamePanel(Game game){
-        mouseInputs = new MouseInputs(this);
-        this.player = new Player(this, 0, 514);
+        this.player = new Player(this, 32, 608);
         this.level = new Level(LevelMatrix.Level1Map,game);
+        this.collisions = new Collisions(getNowMap(), player);
+        
+        mouseInputs = new MouseInputs(this);
         level.loadMapAssets(LevelDefaultAssets.LEVEL_1_FLOOR, LevelDefaultAssets.LEVEL_1_PLATAFORM, LevelDefaultAssets.LEVEL_1_LIMITOR);
-      
-       
+        
+        
  
         player.loadAnimations();
         setPanelSize();
-        addKeyListener(new KeyboardInputs(this, this.player));
         addMouseListener(mouseInputs);
+        addKeyListener(new KeyboardInputs(this, this.player,this.collisions));
+
         addMouseMotionListener(mouseInputs);
     }
 
    
 
-  
     public void updateGame(){
         player.update();
+        collisions.checkCollisions();
+
     }
 
     public void paintComponent(Graphics g){
@@ -78,5 +85,7 @@ public class GamePanel extends JPanel {
         player.setTypeOfAnimation(0);
     }
   
-
+    public char[][] getNowMap(){
+        return this.level.getMatrixMap();
+    }
 }

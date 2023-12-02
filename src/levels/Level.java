@@ -27,4 +27,9 @@ public class Level {
         this.levelHandler.importLevelSprites(floorAssets, plataformsAssets, Limitor);
     }
 
+
+    public char[][] getMatrixMap() {
+        return this.LevelMap;
+    }
+
 }
