@@ -92,7 +92,6 @@ public class Player extends Entity {
     
     public void updatePosition() {
         int playerDirection = this.getDirection();
-
         if (playerDirection == Directions.UP && canMove[0] && isMoving) {
             this.updateYPosition(-1);
 

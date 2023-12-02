@@ -33,44 +33,68 @@ public class KeyboardInputs implements KeyListener {
         // verifica se todas as teclas foram soltadas;
         // se sim então significa que o player está parado
         char keyReleased = Character.toUpperCase(e.getKeyChar());
-
+        
+        // O código abaixo segue a seguinte lógica: 
+        /* Verifica qual tecla que foi clicada, se a posição que ela representa
+         * é uma possibilidade de movimentação do usuário ou representa a última
+         * direção que o usuário está indo então prossegue salvando qual direção
+         * ela representa e pegando o índice dela na pilha de direções.
+        */
+        int indexOfDirection = -1;
+        int direction;
+        
         switch (keyReleased) {
             case 'W':
-                if(player.canMove()[0]){
-                    player.setMoving(false);
+                if(player.canMove()[0] || player.getDirection() == Directions.UP ){
+                    direction = Directions.UP;
+                    indexOfDirection = directionStack.indexOf(direction);
                 }
                 break;
             case 'A':
-                if(player.canMove()[1]){
-                    player.setMoving(false);
+                if(player.canMove()[1] || player.getDirection() == Directions.LEFT){
+                    direction = Directions.LEFT;
+                    indexOfDirection = directionStack.indexOf(direction);
                 }
                 break;
             case 'S':
-                if(player.canMove()[2]){
-                    player.setMoving(false);
+                if(player.canMove()[2] || player.getDirection() == Directions.DOWN ) {
+                    direction = Directions.DOWN;
+                    indexOfDirection = directionStack.indexOf(direction);
                 }                
                 break;
             case 'D':
-                if(player.canMove()[3]){
-                    player.setMoving(false);
+                if(player.canMove()[3] || player.getDirection() == Directions.RIGHT ){
+                    direction = Directions.RIGHT;
+                    indexOfDirection = directionStack.indexOf(direction);
                 }               
                 break;        
             default:
+                
                 break;
         }
+
+            // Se a tecla entrar em algum dos casos do switch significa que o usuário soltou uma 
+            // tecla de movimentação, se não o indice da direção continuára -1;
+            if(indexOfDirection != -1){
+                directionStack.remove(indexOfDirection); // remove da pilha a direção da tecla soltada.
+            }
             // O Código remove a direção e essa parte vai selecionar qual é a direção
             // anterior a que foi removida. Isso serve para caso o usuário clique duas
             // teclas e solte uma, então a tecla que continua pressionada vai funcionar
-            // normalmente. OBS: a verificação de -1 é caso só estiver uma tecla da pilha.
-            // int indexLastDirection = directionStack.size() - 1;
-            // if (indexLastDirection != -1) {
+            // normalmente. OBS: a verificação de -1 é caso só estiver uma tecla na pilha.
+            int indexLastDirection = directionStack.size() - 1;
+            if (indexLastDirection != -1) {
 
-            //     player.setDirection(directionStack.get(indexLastDirection));
-            // }
-            // if (directionStack.isEmpty()) {
-            //     player.setMoving(false);
-            //     player.setTypeOfAnimation(0);
-            // }
+                player.setDirection(directionStack.get(indexLastDirection));
+            }
+            
+
+            // Caso a pilha de direções estiver vazia significa que o usuário não está apertando
+            // alguma tecla de movimentação, ou seja não está se movimentando.
+            if (directionStack.isEmpty()) {
+                 player.setMoving(false);
+                 player.setTypeOfAnimation(0);
+             }
         }
 
     @Override
@@ -126,6 +150,9 @@ public class KeyboardInputs implements KeyListener {
 
     }
 
+
+    // Função reponsável por colocar um item na pilha de direções
+    // só colocará o item se ele ainda não estiver na pilha.
     private void stackDirection(int dir) {
         int index = directionStack.indexOf(dir);
         if (index == -1) {
