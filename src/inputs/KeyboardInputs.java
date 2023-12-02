@@ -70,7 +70,7 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
-
+        collisions.setKeyPressed(keyPressed);
         // previsao de movimentação do player
         player.setMoving(false);
 

@@ -21,7 +21,22 @@ public class Collisions {
         // x é a coluna y a linha
         int[] playerMatrixPosition = { playerXPosition / 32 , playerYPosition / 32}; // 32 x 32 é o tamanho do tile;
         System.out.println("x: " + playerMatrixPosition[0] + '|' + "y: "+ playerMatrixPosition[1]);
+        
+        
 
+        switch (this.keyPressed) {
+            case 'A':
+                if(this.Map[playerMatrixPosition[1]][playerMatrixPosition[0]] == '#'){
+                    player.setPlayerCanMove(false, 1);
+                } else{
+                                        player.setPlayerCanMove(true, 1);
+
+                }
+                break;
+        
+            default:
+                break;
+        }
 
     
     }
