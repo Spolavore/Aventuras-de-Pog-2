@@ -12,7 +12,6 @@ import utils.AssetsHandler;
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
 
-
 public class Player extends Entity {
     private GamePanel gamePanel;
     private int lifes;
@@ -20,34 +19,33 @@ public class Player extends Entity {
     private int playerDirection;
     private boolean isMoving = false;
     private BufferedImage img;
-    private boolean[] canMove = {true, true, true, true}; // array que armazena as direções que o player pode se mover 0: W | 1: A | 2: S | 3: D
-    
+    private boolean[] canMove = { true, true, true, true }; // array que armazena as direções que o player pode se mover
+                                                            // 0: W | 1: A | 2: S | 3: D
+
     // As animações possuem 7 tipos, cada uma é uma linha da matriz animations
     // algumas animações possuem apenas 5 sprites, enquanto outras 8. Esses números
     // referem-se às colunas da matriz citado
     // Para saber todas as animações possíveis ir res/char_blue.png
-    
+
     private BufferedImage[][] animations;
-    private int playerAniTick, playerAniIndex,playerAniSpeed = 10;
-
-
+    private int playerAniTick, playerAniIndex, playerAniSpeed = 10;
 
     public Player(GamePanel g, int x, int y) {
         super(x, y);
         this.gamePanel = g;
         this.lifes = 0;
-       
+
         loadAnimations();
     }
 
-    public void update(){
+    public void update() {
         updateAnimationTick();
         updatePosition();
         // System.out.println("Player X: " + this.getX() + " Player Y: " + this.getY());
     }
 
-    public void render(Graphics g){
-        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int)getX(),(int)getY(), 32, 32,null);
+    public void render(Graphics g) {
+        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int) getX(), (int) getY(), 64, 32, null);
     }
 
     // 0 - 5
@@ -62,57 +60,58 @@ public class Player extends Entity {
     }
 
     public void loadAnimations() {
-            img = AssetsHandler.LoadAssets(Sprites.PLAYER);
-            animations = new BufferedImage[6][8];
-            // Pega-se uma subimagem da imagem original (res/char_blue.png)
-            // recortando conforme a imagem e colocando as subimagens separada
-            // na matriz animations
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 8; j++) {
-                    animations[i][j] = img.getSubimage(j * 56, i * 56, 56, 56);
-                }
+        img = AssetsHandler.LoadAssets(Sprites.PLAYER);
+        animations = new BufferedImage[6][8];
+        // Pega-se uma subimagem da imagem original (res/char_blue.png)
+        // recortando conforme a imagem e colocando as subimagens separada
+        // na matriz animations
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 8; j++) {
+                animations[i][j] = img.getSubimage(j * 56, i * 56, 56, 56);
             }
+        }
     }
+
     private void updateAnimationTick() {
         // Numeros do vetor referem-se a quantas sprites tem cada animação
         // da char_blue.png, ou seja, quantas imagens tem disponiveis para cada
         // tipo de animação
-        int animationsMaxIndexes[] = {6,6,8,8,8};
+        int animationsMaxIndexes[] = { 6, 6, 8, 8, 8 };
 
         playerAniTick++;
-        if (playerAniTick >= playerAniSpeed){
+        if (playerAniTick >= playerAniSpeed) {
             playerAniTick = 0;
-            playerAniIndex+=1;
-            if(playerAniIndex >= animationsMaxIndexes[this.getTypeOfAnimation()]){
+            playerAniIndex += 1;
+            if (playerAniIndex >= animationsMaxIndexes[this.getTypeOfAnimation()]) {
                 playerAniIndex = 0;
             }
         }
     }
 
+
+    
     public void updatePosition() {
+        int playerDirection = this.getDirection();
 
-        if (this.isMoving) {
-            int playerDirection = this.getDirection();
-            if (playerDirection == Directions.DOWN) {
-                this.updateYPosition(1);
-               
-            } else if (playerDirection == Directions.UP) {
-                this.updateYPosition(-1);
-                
+        if (playerDirection == Directions.UP && canMove[0] && isMoving) {
+            this.updateYPosition(-1);
 
-            } else if (playerDirection == Directions.RIGHT) {
-                this.updateXPosition(1);
-                
+        }
+        if (playerDirection == Directions.LEFT && canMove[1] && isMoving) {
+            this.updateXPosition(-1);
 
-            } else {
-                this.updateXPosition(-1);
-                
+        }
+        if (playerDirection == Directions.DOWN && canMove[2] && isMoving) {
+            this.updateYPosition(1);
 
-            }
+        }
+
+        if (playerDirection == Directions.RIGHT && canMove[3] && isMoving) {
+            this.updateXPosition(1);
+
         }
 
     }
-
 
     public int getLifes() {
         return lifes;
@@ -142,7 +141,6 @@ public class Player extends Entity {
         return isMoving;
     }
 
-
     public BufferedImage[][] getAnimations() {
         return animations;
     }
@@ -151,12 +149,11 @@ public class Player extends Entity {
         return playerAniIndex;
     }
 
-
-    public void setPlayerCanMove(boolean bool, int index){
+    public void setPlayerCanMove(boolean bool, int index) {
         this.canMove[index] = bool;
     }
 
-    public boolean[] canMove(){
+    public boolean[] canMove() {
         return this.canMove;
     }
 }

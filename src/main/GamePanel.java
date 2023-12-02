@@ -38,20 +38,16 @@ public class GamePanel extends JPanel {
     private Collisions collisions;
 
     public GamePanel(Game game){
+        // instanciação
         this.player = new Player(this, 32, 608);
         this.level = new Level(LevelMatrix.Level1Map,game);
         this.collisions = new Collisions(getNowMap(), player);
-        
         mouseInputs = new MouseInputs(this);
         level.loadMapAssets(LevelDefaultAssets.LEVEL_1_FLOOR, LevelDefaultAssets.LEVEL_1_PLATAFORM, LevelDefaultAssets.LEVEL_1_LIMITOR);
-        
-        
- 
         player.loadAnimations();
         setPanelSize();
         addMouseListener(mouseInputs);
         addKeyListener(new KeyboardInputs(this, this.player,this.collisions));
-
         addMouseMotionListener(mouseInputs);
     }
 

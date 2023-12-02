@@ -13,7 +13,7 @@ public class GameWindow extends JFrame{
         JFrame jframe = new JFrame();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.add(gamePanel);
-        jframe.setLocationRelativeTo(null); // coloca o janela no centro da tela do usuário
+        // jframe.setLocationRelativeTo(null); // coloca o janela no centro da tela do usuário
         jframe.setResizable(false);
         jframe.pack();
         jframe.setVisible(true);
