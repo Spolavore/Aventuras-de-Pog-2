@@ -8,6 +8,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import physics.Jump;
 import utils.AssetsHandler;
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
@@ -18,14 +19,16 @@ public class Player extends Entity {
     private int typeOfAnimation;
     private int playerDirection;
     private boolean isMoving = false;
+    private boolean isJumping = false;
     private BufferedImage img;
+    private Jump playerJump;
     private boolean[] canMove = { true, true, true, true }; // array que armazena as direções que o player pode se mover
                                                             // 0: W | 1: A | 2: S | 3: D
 
     // As animações possuem 7 tipos, cada uma é uma linha da matriz animations
     // algumas animações possuem apenas 5 sprites, enquanto outras 8. Esses números
     // referem-se às colunas da matriz citado
-    // Para saber todas as animações possíveis ir res/char_blue.png
+    // Para saber todas as animações possíveis ir assets/player/char_blue.png
 
     private BufferedImage[][] animations;
     private int playerAniTick, playerAniIndex, playerAniSpeed = 10;
@@ -34,7 +37,7 @@ public class Player extends Entity {
         super(x, y);
         this.gamePanel = g;
         this.lifes = 0;
-
+        this.playerJump = new Jump(this); // Inicializa o jump permitindo que o player pule
         loadAnimations();
     }
 
@@ -45,7 +48,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int) getX(), (int) getY(), 64, 32, null);
+        g.drawImage(animations[typeOfAnimation][playerAniIndex], (int) getX(), (int) getY(), 64, 64, null);
     }
 
     // 0 - 5
@@ -92,8 +95,8 @@ public class Player extends Entity {
     
     public void updatePosition() {
         int playerDirection = this.getDirection();
-        if (playerDirection == Directions.UP && canMove[0] && isMoving) {
-            this.updateYPosition(-1);
+        if (playerDirection == Directions.UP && canMove[0] && isJumping) {
+            
 
         }
         if (playerDirection == Directions.LEFT && canMove[1] && isMoving) {
@@ -140,6 +143,13 @@ public class Player extends Entity {
         return isMoving;
     }
 
+    public void setJumping(boolean bool){
+        this.isJumping = bool;
+    }
+
+    public boolean isJumping(){
+        return isJumping;
+    }
     public BufferedImage[][] getAnimations() {
         return animations;
     }

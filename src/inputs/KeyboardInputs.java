@@ -14,7 +14,7 @@ public class KeyboardInputs implements KeyListener {
     private GamePanel gamePanel;
     private Player player;
     private Collisions collisions;
-    private ArrayList<Integer> directionStack = new ArrayList<>();
+    private static ArrayList<Integer> directionStack = new ArrayList<>();
 
     public KeyboardInputs(GamePanel gamePanel, Player player, Collisions collisions) {
         this.gamePanel = gamePanel;
@@ -73,6 +73,7 @@ public class KeyboardInputs implements KeyListener {
                 break;
         }
 
+
             // Se a tecla entrar em algum dos casos do switch significa que o usuário soltou uma 
             // tecla de movimentação, se não o indice da direção continuára -1;
             if(indexOfDirection != -1){
@@ -100,17 +101,8 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
- 
+
         switch (keyPressed) {
-            case 'W':
-                if (player.canMove()[0]) {
-                    player.setDirection(Directions.UP);
-                    stackDirection(Directions.UP);
-                    player.setMoving(true);
-                }
-
-                break;
-
             case 'A':
                 if (player.canMove()[1]) {
                     player.setDirection(Directions.LEFT);
@@ -143,6 +135,10 @@ public class KeyboardInputs implements KeyListener {
 
                 break;
 
+            case ' ':
+                player.setDirection(Directions.UP);
+                player.setJumping(true);
+                break;
             default:
 
 
@@ -158,5 +154,9 @@ public class KeyboardInputs implements KeyListener {
         if (index == -1) {
             directionStack.add(dir);
         }
+    }
+    // Limpa a Fila de Stack quando o jogo é minimizado
+    public static void clearStack(){
+        KeyboardInputs.directionStack.clear();
     }
 }

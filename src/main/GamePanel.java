@@ -39,7 +39,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game){
         // instanciação
-        this.player = new Player(this, 32, 608);
+        this.player = new Player(this, 16, 576); // posição atual do player em determinada fase
         this.level = new Level(LevelMatrix.Level1Map,game);
         this.collisions = new Collisions(getNowMap(), player);
         mouseInputs = new MouseInputs(this);
@@ -75,12 +75,19 @@ public class GamePanel extends JPanel {
     }
 
 
+    // Função que controla o jogo quando o usuário minimiza o jogo ou 
+    // clica fora da tela
     public void windowLostFocus(){
         System.out.println("Jogo foi minimizado");
+        // Para o jogador caso ele esteja se movendo e
+        // limpa a pilha de direções para eliminar qualquer
+        // outra direção armazenada
         player.setMoving(false);
         player.setTypeOfAnimation(0);
+        KeyboardInputs.clearStack();
     }
-  
+    
+    // Retorna o Mapa Atual da fase
     public char[][] getNowMap(){
         return this.level.getMatrixMap();
     }
