@@ -42,24 +42,38 @@ public class Collisions {
             }
             
         }
-
+        
+        //Verificação para a parede da esquerda, só será considerado que o player está
+        //enconstado nela quando ele tiver o mais perto possível
         if(playerXPosition/32 == 1 && player.getDirection() == Directions.RIGHT){
             playerXPosition += 16;
         }
 
+
+        if(player.isJumping() ){
+            playerYPosition += 16;
+        }
+        
+        if(player.isFalling()){
+            playerXPosition += 0;
+
+        }
 
 
         // x é a coluna y a linha, Matrix que possui as tranformação das coordenadas de tela para as coordenadas da matrix do mapa
         int[] playerMatrixPosition = { playerXPosition / 32 , playerYPosition / 32}; // 32 x 32 é o tamanho do tile;
 
         
-         //System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: "+ playerMatrixPosition[1]);
+         System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: "+ playerMatrixPosition[1]);
 
 
         // ** Abaixo estão as verificações de se o usuário pode ou não se movimentar para uma das 4 direções **/
         // Verificação se o player pode se mover para cima
+        
         if(this.Map[playerMatrixPosition[1]-1][playerMatrixPosition[0]] == '#'){
             player.setPlayerCanMove(false, 0);
+         
+
         } else{ 
             player.setPlayerCanMove(true, 0);
         }
@@ -88,9 +102,16 @@ public class Collisions {
         }else{
             player.setPlayerCanMove(true, 3);
         }
-    
 
-    
+
+
+        // Verificação se o player está caindo
+        if(this.Map[playerMatrixPosition[1]+1][playerMatrixPosition[0]] == ' '){
+            player.setFalling(true);
+            System.out.println("oi");
+        }else{
+            player.setFalling(false);
+        }
     }
 
 

@@ -44,7 +44,6 @@ public class KeyboardInputs implements KeyListener {
         int indexOfDirection = -1;
         int direction;
 
-        System.out.println(directionStack);
 
         switch (keyReleased) {
             case 'W':
@@ -119,9 +118,13 @@ public class KeyboardInputs implements KeyListener {
             case 'A':
                 if (player.canMove()[1]) {
                     player.setDirection(Directions.LEFT);
-                    player.setTypeOfAnimation(2);
                     stackDirection(Directions.LEFT);
                     player.setMoving(true);
+
+                    if(!player.isJumping()){
+                         player.setTypeOfAnimation(2);
+                    }
+                   
 
                 }
 
@@ -141,10 +144,12 @@ public class KeyboardInputs implements KeyListener {
             case 'D':
                 if (player.canMove()[3]) {
                     player.setDirection(Directions.RIGHT);
-                    player.setTypeOfAnimation(2);
                     stackDirection(Directions.RIGHT);
                     player.setMoving(true);
 
+                    if(!player.isJumping()){
+                        player.setTypeOfAnimation(2);
+                    }
                 }
 
                 break;
@@ -152,6 +157,7 @@ public class KeyboardInputs implements KeyListener {
             case ' ':
                 player.setDirection(Directions.UP);
                 player.setJumping(true);
+                
                 break;
             default:
                 break;
@@ -172,5 +178,15 @@ public class KeyboardInputs implements KeyListener {
     // Limpa a Fila de Stack quando o jogo é minimizado
     public static void clearStack() {
         KeyboardInputs.directionStack.clear();
+    }
+
+
+    public static int getLastDirection(){
+        if(directionStack.size() != 0){
+            int lastDirectionIndex = directionStack.size() - 1;
+            return directionStack.get(lastDirectionIndex);
+        } else {
+            return 400; // erro
+        }
     }
 }

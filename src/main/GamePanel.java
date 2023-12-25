@@ -8,6 +8,7 @@ import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 import levels.LevelHandler;
 import physics.Collisions;
+import physics.Gravity;
 import levels.Level;
 import utils.Constants;
 import utils.Constants.Directions;
@@ -36,13 +37,17 @@ public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
     private LevelHandler levelHandler;
     private Collisions collisions;
+    private Gravity gravity;
 
     public GamePanel(Game game){
         // instanciação
         this.player = new Player(this, 16, 576); // posição atual do player em determinada fase
         this.level = new Level(LevelMatrix.Level1Map,game);
         this.collisions = new Collisions(getNowMap(), player);
-        mouseInputs = new MouseInputs(this);
+        this.gravity = new Gravity(player);
+        this.mouseInputs = new MouseInputs(this);
+
+
         level.loadMapAssets(LevelDefaultAssets.LEVEL_1_FLOOR, LevelDefaultAssets.LEVEL_1_PLATAFORM, LevelDefaultAssets.LEVEL_1_LIMITOR);
         player.loadAnimations();
         setPanelSize();
@@ -56,7 +61,7 @@ public class GamePanel extends JPanel {
     public void updateGame(){
         player.update();
         collisions.checkCollisions();
-
+        gravity.gravityForce();
     }
 
     public void paintComponent(Graphics g){

@@ -20,6 +20,7 @@ public class Player extends Entity {
     private int playerDirection;
     private boolean isMoving = false;
     private boolean isJumping = false;
+    private boolean isFalling = false;
     private BufferedImage img;
     private Jump playerJump;
     private boolean[] canMove = { true, true, true, true }; // array que armazena as direções que o player pode se mover
@@ -91,31 +92,33 @@ public class Player extends Entity {
         }
     }
 
-
-    
     public void updatePosition() {
         int playerDirection = this.getDirection();
         if (playerDirection == Directions.UP && canMove[0] && isJumping) {
-            if(!playerJump.coolDownIsOn()){
+
+            if (!playerJump.coolDownIsOn()) {
                 playerJump.jump();
             } else {
-
                 System.err.println("Pulo está em Cooldown");
             }
-            
 
         }
         if (playerDirection == Directions.LEFT && canMove[1] && isMoving) {
             this.updateXPosition(-1);
 
-        }
-        if (playerDirection == Directions.DOWN && canMove[2] && isMoving) {
-            this.updateYPosition(1);
+            if (isJumping) {
+                this.updateYPosition(-1);
+            }
 
         }
 
         if (playerDirection == Directions.RIGHT && canMove[3] && isMoving) {
+
             this.updateXPosition(1);
+
+            if (isJumping) {
+                this.updateYPosition(-1);
+            }
 
         }
 
@@ -149,13 +152,22 @@ public class Player extends Entity {
         return isMoving;
     }
 
-    public void setJumping(boolean bool){
+    public void setJumping(boolean bool) {
         this.isJumping = bool;
     }
 
-    public boolean isJumping(){
+    public boolean isJumping() {
         return isJumping;
     }
+
+    public boolean isFalling() {
+        return isFalling;
+    }
+
+    public void setFalling(boolean bool) {
+        this.isFalling = bool;
+    }
+
     public BufferedImage[][] getAnimations() {
         return animations;
     }
@@ -171,4 +183,5 @@ public class Player extends Entity {
     public boolean[] canMove() {
         return this.canMove;
     }
+
 }
