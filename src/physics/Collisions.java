@@ -1,6 +1,7 @@
 package physics;
 
 import entities.Player;
+
 import utils.Constants.Directions;
 // As colisões são verificadas quando o usuário tenta se movimentar, ou seja, elas estão sendo 
 // incorporadas em KeyboardInputs.java, entretando é no método update do GamePanel que a checagem de colisões
@@ -52,7 +53,7 @@ public class Collisions {
         int[] playerMatrixPosition = { playerXPosition / 32 , playerYPosition / 32}; // 32 x 32 é o tamanho do tile;
 
         
-        // System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: "+ playerMatrixPosition[1]);
+         //System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: "+ playerMatrixPosition[1]);
 
 
         // ** Abaixo estão as verificações de se o usuário pode ou não se movimentar para uma das 4 direções **/
@@ -66,6 +67,7 @@ public class Collisions {
         // Verificação se o player pode se mover para a esquerda
         if(this.Map[playerMatrixPosition[1]][playerMatrixPosition[0]-1] == '#'){
             player.setPlayerCanMove(false, 1);
+           
         }else{
             player.setPlayerCanMove(true, 1);
 

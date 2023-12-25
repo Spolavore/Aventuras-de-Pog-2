@@ -96,6 +96,12 @@ public class Player extends Entity {
     public void updatePosition() {
         int playerDirection = this.getDirection();
         if (playerDirection == Directions.UP && canMove[0] && isJumping) {
+            if(!playerJump.coolDownIsOn()){
+                playerJump.jump();
+            } else {
+
+                System.err.println("Pulo está em Cooldown");
+            }
             
 
         }
