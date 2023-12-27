@@ -94,31 +94,34 @@ public class Player extends Entity {
 
     public void updatePosition() {
         int playerDirection = this.getDirection();
-        if (playerDirection == Directions.UP && canMove[0] && isJumping) {
-
+       
+        if (isJumping) {
             if (!playerJump.coolDownIsOn()) {
                 playerJump.jump();
             } else {
-                System.err.println("Pulo está em Cooldown");
+               System.err.println("Pulo está em Cooldown");
             }
 
         }
-        if (playerDirection == Directions.LEFT && canMove[1] && isMoving) {
-            this.updateXPosition(-1);
+        if (playerDirection == Directions.LEFT && canMove[1] && isMoving && !isFalling) {
+            if(isJumping){
+                playerJump.jumpWithMovimentation(Directions.LEFT);
+            }else{
 
-            if (isJumping) {
-                this.updateYPosition(-1);
+                this.updateXPosition(-1);
             }
+
 
         }
+        
+        if (playerDirection == Directions.RIGHT && canMove[3] && isMoving && !isFalling) {
+            if(isJumping){
+                playerJump.jumpWithMovimentation(Directions.RIGHT);
+            } else{
 
-        if (playerDirection == Directions.RIGHT && canMove[3] && isMoving) {
-
-            this.updateXPosition(1);
-
-            if (isJumping) {
-                this.updateYPosition(-1);
+                this.updateXPosition(1);
             }
+
 
         }
 
@@ -183,5 +186,14 @@ public class Player extends Entity {
     public boolean[] canMove() {
         return this.canMove;
     }
+
+    public int playerXPosition(){
+        return this.getX();
+    }
+
+    public int playerYPosition(){
+        return this.getY();
+    }
+
 
 }

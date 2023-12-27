@@ -11,21 +11,49 @@ import utils.Constants.Directions;
 public class Jump {
     private Player player;
     private boolean jumpIsCoolDown = false;
-    private int coolDownTime = 1500;
+    private int coolDownTime = 500;
+    private static boolean playerJumped = false;
+    private static boolean canJumpAgain = false;
     public Jump(Player player) {
         this.player = player;
     }
 
     public void jump() {
+        int lastDirection = KeyboardInputs.getLastDirection();
+
+        // switch (lastDirection) {
+        //     case Directions.RIGHT:
+        //         player.updateXPosition(1);
+        //         break;
+            
+        //     case Directions.LEFT:
+        //         player.updateXPosition(-1);
+        //     default:
+        //         break;
+        // }
+
+        if(player.canMove()[0] && canJumpAgain){
+             player.updateYPosition(-1);
+             player.setTypeOfAnimation(3);
+             applyCooldown();
+        }else{
+            player.setJumping(false);
+        }
        
-
-
-        player.updateYPosition(-1);
-        player.setTypeOfAnimation(3);
-
-        applyCooldown();
         
 
+
+    }
+
+    public void jumpWithMovimentation(int Direction){
+        if(player.canMove()[0]){
+            player.updateYPosition(-1);
+            player.updateXPosition(Direction);
+            player.setTypeOfAnimation(3);
+            applyCooldown();
+        } else{
+            player.setJumping(false);
+        }
 
     }
     
@@ -36,8 +64,10 @@ public class Jump {
             @Override
             public void run() {
                 player.setJumping(false);
-                jumpIsCoolDown = true;
-               player.setTypeOfAnimation(0);
+                jumpIsCoolDown = true; 
+                playerJumped = true;
+                canJumpAgain = false;
+                player.setTypeOfAnimation(0);
 
             }
         }, 500);
@@ -45,14 +75,27 @@ public class Jump {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                
                 jumpIsCoolDown = false;
+                
             }
         }, coolDownTime);
     }
 
+    public static void reset(){
+        canJumpAgain = true;
+        playerJumped = false;
+    }
 
     public boolean coolDownIsOn(){
         return this.jumpIsCoolDown;
+    }
+
+    
+    public static boolean canJumpAgain(){
+        return canJumpAgain;
+    }
+
+    public static boolean playerJumped(){
+        return Jump.playerJumped;
     }
 }

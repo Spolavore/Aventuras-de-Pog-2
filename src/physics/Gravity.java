@@ -14,7 +14,7 @@ public class Gravity {
     }
 
     public void gravityForce() {
-        if (player.isFalling() && !player.isJumping()) {
+        if (player.isFalling() && !player.isJumping() && player.canMove()[2]) {
             player.updateYPosition(gravityIntensity);
   
         }

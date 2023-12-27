@@ -41,7 +41,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game){
         // instanciação
-        this.player = new Player(this, 16, 576); // posição atual do player em determinada fase
+        this.player = new Player(this, 32, 576); // posição atual do player em determinada fase
         this.level = new Level(LevelMatrix.Level1Map,game);
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
@@ -52,7 +52,7 @@ public class GamePanel extends JPanel {
         player.loadAnimations();
         setPanelSize();
         addMouseListener(mouseInputs);
-        addKeyListener(new KeyboardInputs(this, this.player,this.collisions));
+        addKeyListener(new KeyboardInputs(this, this.player));
         addMouseMotionListener(mouseInputs);
     }
 
@@ -62,6 +62,7 @@ public class GamePanel extends JPanel {
         player.update();
         collisions.checkCollisions();
         gravity.gravityForce();
+
     }
 
     public void paintComponent(Graphics g){

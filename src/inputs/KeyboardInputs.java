@@ -13,13 +13,13 @@ import utils.Constants.Directions.*;
 public class KeyboardInputs implements KeyListener {
     private GamePanel gamePanel;
     private Player player;
-    private Collisions collisions;
+    private static int lastDirectionRegistred;
     private static ArrayList<Integer> directionStack = new ArrayList<>();
 
-    public KeyboardInputs(GamePanel gamePanel, Player player, Collisions collisions) {
+    public KeyboardInputs(GamePanel gamePanel, Player player) {
         this.gamePanel = gamePanel;
         this.player = player;
-        this.collisions = collisions;
+        
     }
 
     @Override
@@ -49,6 +49,7 @@ public class KeyboardInputs implements KeyListener {
             case 'W':
                 if (player.canMove()[0] || player.getDirection() == Directions.UP) {
                     direction = Directions.UP;
+                    
                     indexOfDirection = directionStack.indexOf(direction);
                 }
                 break;
@@ -120,7 +121,7 @@ public class KeyboardInputs implements KeyListener {
                     player.setDirection(Directions.LEFT);
                     stackDirection(Directions.LEFT);
                     player.setMoving(true);
-
+                    lastDirectionRegistred = Directions.LEFT;
                     if(!player.isJumping()){
                          player.setTypeOfAnimation(2);
                     }
@@ -146,7 +147,7 @@ public class KeyboardInputs implements KeyListener {
                     player.setDirection(Directions.RIGHT);
                     stackDirection(Directions.RIGHT);
                     player.setMoving(true);
-
+                    lastDirectionRegistred = Directions.RIGHT;
                     if(!player.isJumping()){
                         player.setTypeOfAnimation(2);
                     }
@@ -155,7 +156,6 @@ public class KeyboardInputs implements KeyListener {
                 break;
 
             case ' ':
-                player.setDirection(Directions.UP);
                 player.setJumping(true);
                 
                 break;
@@ -188,5 +188,13 @@ public class KeyboardInputs implements KeyListener {
         } else {
             return 400; // erro
         }
+    }
+    
+    // A diferenção entre esse get e o getLastDirection é que este está guarando
+    // em memória a última tecla processada, estão ela soltada ou não. Já
+    // a getLastDirection retorta a última direção contida na pilha. (Caso o usuário
+    // solte as teclas a pilha é limpada)
+    public static int getLastDirectionRegistred(){
+        return lastDirectionRegistred;
     }
 }
