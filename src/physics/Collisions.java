@@ -32,42 +32,13 @@ public class Collisions {
     }
 
     public void checkCollisions() {
-
-        int playerXConverted = playerXPosition / 32;
-        int playerYConverted = playerYPosition / 32;
-
-        if (playerXConverted == 1) {
-            hitboxX = 16;
-        }
-
-        if (KeyboardInputs.getLastDirectionRegistred() == Directions.LEFT) {
-            if (playerIsInRightBorder) {
-                System.out.println("borda right");
-
-                hitboxX = 16;
-
-            } else {
-                hitboxX = 32; 
-            }
-
-        }
-
-        if (KeyboardInputs.getLastDirectionRegistred() == Directions.RIGHT) {
-            if (playerIsInLeftBorder) {
-                System.out.println("borda left");
-                hitboxX = 32;
-
-            } else if (playerXConverted != 1) {
-                hitboxX = 40;
-            }
-
-        }
-
+        hitBoxCorrection();
         // x é a coluna y a linha, Matrix que possui as tranformação das coordenadas de
         // tela para as coordenadas da matrix do mapa
         int[] playerMatrixPosition = { playerXPosition / 32, playerYPosition / 32 }; // 32 x 32 é o tamanho do tile;
 
-        System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " + playerMatrixPosition[1]);
+        // System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " +
+        // playerMatrixPosition[1]);
 
         // ** Abaixo estão as verificações de se o usuário pode ou não se movimentar
         // para uma das 4 direções **/
@@ -93,24 +64,6 @@ public class Collisions {
         if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == '#') {
             player.setPlayerCanMove(false, 2);
 
-            boolean isRightDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] + 1] == ' ';
-            boolean isLeftDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] - 1] == ' ';
-            // Verifica se o player está numa borda (Esquerda)
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == ' ' && isLeftDiagonalEmpty) {
-                playerIsInLeftBorder = true;
-
-            } else {
-                playerIsInLeftBorder = false;
-
-            }
-            // Verifica se o player está numa borda (Direita)
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == ' ' && isRightDiagonalEmpty) {
-                playerIsInRightBorder = true;
-            } else {
-                playerIsInRightBorder = false;
-
-            }
-
         } else {
             player.setPlayerCanMove(true, 2);
         }
@@ -126,10 +79,11 @@ public class Collisions {
         if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ') {
             if (!player.isJumping()) {
                 player.setFalling(true);
+                player.setTypeOfAnimation(4);    
                 player.setPlayerCanMove(true, 2);
             }
         } else {
-
+            
             // Se o player chegou no chão então reseta o pulo (Ele pode pular novamente)
             player.setFalling(false);
             Jump.reset();
@@ -137,10 +91,61 @@ public class Collisions {
 
         }
 
+        boolean isRightDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] + 1] == ' ';
+        boolean isLeftDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] - 1] == ' ';
+
+        // Verifica se o player está numa borda (Esquerda)
+        if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == ' ' && isLeftDiagonalEmpty) {
+            playerIsInLeftBorder = true;
+
+        } else {
+            playerIsInLeftBorder = false;
+
+        }
+        // Verifica se o player está numa borda (Direita)
+        if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == ' ' && isRightDiagonalEmpty) {
+            playerIsInRightBorder = true;
+        } else {
+            playerIsInRightBorder = false;
+
+        }
         // Atualiza as posições
         playerYPosition = player.playerYPosition() + hitboxY;
         playerXPosition = player.playerXPosition() + hitboxX;
 
+    }
+
+
+    // Função responsável por corrigir a hitbox do personagem em diversos casos
+    //, a fim de traz um fluidez para o jogo e  para o bom funcionamento do contato
+    // player-ambiente
+    private void hitBoxCorrection() {
+        int playerXConverted = playerXPosition / 32;
+        int playerYConverted = playerYPosition / 32;
+
+        if (playerXConverted == 1) {
+            hitboxX = 32;
+        }
+
+        if (KeyboardInputs.getLastDirectionRegistred() == Directions.LEFT) {
+            if (playerIsInRightBorder) {
+                hitboxX = 20;
+
+            } else {
+                hitboxX = 32;
+            }
+
+        }
+
+        if (KeyboardInputs.getLastDirectionRegistred() == Directions.RIGHT) {
+            if (playerIsInLeftBorder) {
+                hitboxX = 30;
+
+            } else if (playerXConverted != 1) {
+                hitboxX = 16;
+            }
+
+        }
     }
 
 }

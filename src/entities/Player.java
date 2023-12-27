@@ -32,7 +32,7 @@ public class Player extends Entity {
     // Para saber todas as animações possíveis ir assets/player/char_blue.png
 
     private BufferedImage[][] animations;
-    private int playerAniTick, playerAniIndex, playerAniSpeed = 10;
+    private int playerAniTick, playerAniIndex, playerAniSpeed = 20;
 
     public Player(GamePanel g, int x, int y) {
         super(x, y);
@@ -70,9 +70,17 @@ public class Player extends Entity {
         // recortando conforme a imagem e colocando as subimagens separada
         // na matriz animations
         for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 8; j++) {
-                animations[i][j] = img.getSubimage(j * 56, i * 56, 56, 56);
+            // esse if é utilizado para pegar a animação da queda, no caso nao queremos toda a animação
+            // apenas a primeira sprite
+            if (i != 4) {
+                for (int j = 0; j < 8; j++) {
+                    animations[i][j] = img.getSubimage(j * 56, i * 56, 56, 56);
+                }
+            } else {
+                 
+                 animations[i][0] = img.getSubimage( 0 * 56, i * 56, 56, 56);
             }
+
         }
     }
 
@@ -80,8 +88,8 @@ public class Player extends Entity {
         // Numeros do vetor referem-se a quantas sprites tem cada animação
         // da char_blue.png, ou seja, quantas imagens tem disponiveis para cada
         // tipo de animação
-        int animationsMaxIndexes[] = { 6, 6, 8, 8, 8 };
-
+        int animationsMaxIndexes[] = { 6, 6, 8, 8, 1 };
+        
         playerAniTick++;
         if (playerAniTick >= playerAniSpeed) {
             playerAniTick = 0;
@@ -94,36 +102,39 @@ public class Player extends Entity {
 
     public void updatePosition() {
         int playerDirection = this.getDirection();
-       
+
         if (isJumping) {
             if (!playerJump.coolDownIsOn()) {
                 playerJump.jump();
             } else {
-               System.err.println("Pulo está em Cooldown");
+                System.err.println("Pulo está em Cooldown");
             }
 
         }
         if (playerDirection == Directions.LEFT && canMove[1] && isMoving && !isFalling) {
-            if(isJumping){
+            if (isJumping) {
                 playerJump.jumpWithMovimentation(Directions.LEFT);
-            }else{
+            } else {
 
                 this.updateXPosition(-1);
             }
 
-
         }
-        
+
         if (playerDirection == Directions.RIGHT && canMove[3] && isMoving && !isFalling) {
-            if(isJumping){
+            if (isJumping) {
                 playerJump.jumpWithMovimentation(Directions.RIGHT);
-            } else{
+            } else {
 
                 this.updateXPosition(1);
             }
 
-
         }
+
+        if(!isFalling && !isJumping && !isMoving){
+            setTypeOfAnimation(0);
+        }
+
 
     }
 
@@ -187,13 +198,12 @@ public class Player extends Entity {
         return this.canMove;
     }
 
-    public int playerXPosition(){
+    public int playerXPosition() {
         return this.getX();
     }
 
-    public int playerYPosition(){
+    public int playerYPosition() {
         return this.getY();
     }
-
 
 }

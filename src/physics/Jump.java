@@ -67,7 +67,7 @@ public class Jump {
                 jumpIsCoolDown = true; 
                 playerJumped = true;
                 canJumpAgain = false;
-                player.setTypeOfAnimation(0);
+                
 
             }
         }, 500);
