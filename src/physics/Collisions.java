@@ -37,78 +37,84 @@ public class Collisions {
         // tela para as coordenadas da matrix do mapa
         int[] playerMatrixPosition = { playerXPosition / 32, playerYPosition / 32 }; // 32 x 32 é o tamanho do tile;
 
-        // System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " +
-        // playerMatrixPosition[1]);
+        System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " + playerMatrixPosition[1]);
 
         // ** Abaixo estão as verificações de se o usuário pode ou não se movimentar
         // para uma das 4 direções **/
 
-        // Verificação se o player pode se mover para cima
-        if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] == '#') {
-            player.setPlayerCanMove(false, 0);
-
-        } else {
-            player.setPlayerCanMove(true, 0);
-        }
-
-        // Verificação se o player pode se mover para a esquerda
-        if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == '#') {
+        // Verificacao de limites de borda
+        if (playerMatrixPosition[0] == 0) {
             player.setPlayerCanMove(false, 1);
-
         } else {
-            player.setPlayerCanMove(true, 1);
 
-        }
+            // Verificação se o player pode se mover para cima
+            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] == '#') {
+                player.setPlayerCanMove(false, 0);
 
-        // Verificação se o player pode se mover para baixo
-        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == '#') {
-            player.setPlayerCanMove(false, 2);
+            } else {
+                player.setPlayerCanMove(true, 0);
+            }
 
-        } else {
-            player.setPlayerCanMove(true, 2);
-        }
+            // Verificação se o player pode se mover para a esquerda
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == '#') {
+                player.setPlayerCanMove(false, 1);
 
-        // Verificação se o player pode se mover para a direita
-        if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == '#') {
-            player.setPlayerCanMove(false, 3);
-        } else {
-            player.setPlayerCanMove(true, 3);
-        }
+            } else {
+                player.setPlayerCanMove(true, 1);
 
-        // Verificação se o player está caindo
-        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ') {
-            if (!player.isJumping()) {
-                player.setFalling(true);
-                player.setTypeOfAnimation(4);    
+            }
+
+            // Verificação se o player pode se mover para baixo
+            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == '#') {
+                player.setPlayerCanMove(false, 2);
+
+            } else {
                 player.setPlayerCanMove(true, 2);
             }
-        } else {
-            
-            // Se o player chegou no chão então reseta o pulo (Ele pode pular novamente)
-            player.setFalling(false);
-            Jump.reset();
-            player.setPlayerCanMove(false, 2);
 
+            // Verificação se o player pode se mover para a direita
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == '#') {
+                player.setPlayerCanMove(false, 3);
+            } else {
+                player.setPlayerCanMove(true, 3);
+            }
+
+            // Verificação se o player está caindo
+            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ') {
+                if (!player.isJumping()) {
+                    player.setFalling(true);
+                    player.setTypeOfAnimation(4);
+                    player.setPlayerCanMove(true, 2);
+                }
+            } else {
+
+                // Se o player chegou no chão então reseta o pulo (Ele pode pular novamente)
+                player.setFalling(false);
+                Jump.reset();
+                player.setPlayerCanMove(false, 2);
+
+            }
+
+            boolean isRightDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] + 1] == ' ';
+            boolean isLeftDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] - 1] == ' ';
+
+            // Verifica se o player está numa borda (Esquerda)
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == ' ' && isLeftDiagonalEmpty) {
+                playerIsInLeftBorder = true;
+
+            } else {
+                playerIsInLeftBorder = false;
+
+            }
+            // Verifica se o player está numa borda (Direita)
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == ' ' && isRightDiagonalEmpty) {
+                playerIsInRightBorder = true;
+            } else {
+                playerIsInRightBorder = false;
+
+            }
         }
 
-        boolean isRightDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] + 1] == ' ';
-        boolean isLeftDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] - 1] == ' ';
-
-        // Verifica se o player está numa borda (Esquerda)
-        if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == ' ' && isLeftDiagonalEmpty) {
-            playerIsInLeftBorder = true;
-
-        } else {
-            playerIsInLeftBorder = false;
-
-        }
-        // Verifica se o player está numa borda (Direita)
-        if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == ' ' && isRightDiagonalEmpty) {
-            playerIsInRightBorder = true;
-        } else {
-            playerIsInRightBorder = false;
-
-        }
         // Atualiza as posições
         playerYPosition = player.playerYPosition() + hitboxY;
         playerXPosition = player.playerXPosition() + hitboxX;
@@ -116,8 +122,11 @@ public class Collisions {
     }
 
 
+    private void checkBoardLimits(){
+        
+    }
     // Função responsável por corrigir a hitbox do personagem em diversos casos
-    //, a fim de traz um fluidez para o jogo e  para o bom funcionamento do contato
+    // , a fim de traz um fluidez para o jogo e para o bom funcionamento do contato
     // player-ambiente
     private void hitBoxCorrection() {
         int playerXConverted = playerXPosition / 32;
@@ -125,6 +134,13 @@ public class Collisions {
 
         if (playerXConverted == 1) {
             hitboxX = 32;
+        }
+
+        if (player.isJumping()) {
+            hitboxY = 40;
+
+        } else {
+            hitboxY = 32;
         }
 
         if (KeyboardInputs.getLastDirectionRegistred() == Directions.LEFT) {
@@ -136,10 +152,9 @@ public class Collisions {
             }
 
         }
-
         if (KeyboardInputs.getLastDirectionRegistred() == Directions.RIGHT) {
             if (playerIsInLeftBorder) {
-                hitboxX = 30;
+                hitboxX = 35;
 
             } else if (playerXConverted != 1) {
                 hitboxX = 16;

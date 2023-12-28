@@ -1,6 +1,7 @@
 package levels;
 
 import main.Game;
+import utils.Constants.LevelDefaultAssets;
 
 import java.awt.Graphics;
 
@@ -18,13 +19,19 @@ public class Level {
     }
 
 
-    public void draw(char[][] MatrixLevel, Graphics g){
-        this.levelHandler.drawLevel(MatrixLevel, g);
+    public void draw(char[][] MatrixLevel, Graphics g, int level){
+        this.levelHandler.drawLevel(MatrixLevel, g, level);
     }
 
 
-    public void loadMapAssets(String  floorAssets,String plataformsAssets, String Limitor){
-        this.levelHandler.importLevelSprites(floorAssets, plataformsAssets, Limitor);
+    public void loadMapAssets(int level){
+        if(level == 1){
+            String floorAssets[] = {LevelDefaultAssets.LEVEL_1_FLOOR, LevelDefaultAssets.LEVEL_1_LEFT_FLOOR_BORDER,
+            LevelDefaultAssets.LEVEL_1_RIGHT_FLOOR_BORDER} ;
+            String plataformsAssets[] ={LevelDefaultAssets.LEVEL_1_PLATAFORM};
+            String Limitor[] ={ };
+            this.levelHandler.importLevelSprites(floorAssets, plataformsAssets, Limitor);
+        }
     }
 
 

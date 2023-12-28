@@ -117,7 +117,7 @@ public class KeyboardInputs implements KeyListener {
 
         switch (keyPressed) {
             case 'A':
-                if (player.canMove()[1]) {
+                if (player.canMove()[1] &&  !player.isFalling()) {
                     player.setDirection(Directions.LEFT);
                     stackDirection(Directions.LEFT);
                     player.setMoving(true);
@@ -143,7 +143,7 @@ public class KeyboardInputs implements KeyListener {
             // break;
 
             case 'D':
-                if (player.canMove()[3]) {
+                if (player.canMove()[3] && !player.isFalling()) {
                     player.setDirection(Directions.RIGHT);
                     stackDirection(Directions.RIGHT);
                     player.setMoving(true);
@@ -156,6 +156,7 @@ public class KeyboardInputs implements KeyListener {
                 break;
 
             case ' ':
+
                 player.setJumping(true);
                 
                 break;
@@ -196,5 +197,10 @@ public class KeyboardInputs implements KeyListener {
     // solte as teclas a pilha é limpada)
     public static int getLastDirectionRegistred(){
         return lastDirectionRegistred;
+    }
+
+
+    public static int sizeDirectionStack(){
+        return directionStack.size();
     }
 }

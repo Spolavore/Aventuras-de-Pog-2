@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import inputs.KeyboardInputs;
 import main.GamePanel;
 import physics.Jump;
 import utils.AssetsHandler;
@@ -43,8 +44,10 @@ public class Player extends Entity {
     }
 
     public void update() {
+
         updateAnimationTick();
         updatePosition();
+        changeAnimationAfterFalling();
         // System.out.println("Player X: " + this.getX() + " Player Y: " + this.getY());
     }
 
@@ -70,15 +73,16 @@ public class Player extends Entity {
         // recortando conforme a imagem e colocando as subimagens separada
         // na matriz animations
         for (int i = 0; i < 6; i++) {
-            // esse if é utilizado para pegar a animação da queda, no caso nao queremos toda a animação
+            // esse if é utilizado para pegar a animação da queda, no caso nao queremos toda
+            // a animação
             // apenas a primeira sprite
             if (i != 4) {
                 for (int j = 0; j < 8; j++) {
                     animations[i][j] = img.getSubimage(j * 56, i * 56, 56, 56);
                 }
             } else {
-                 
-                 animations[i][0] = img.getSubimage( 0 * 56, i * 56, 56, 56);
+
+                animations[i][0] = img.getSubimage(1 * 56, i * 56, 56, 56);
             }
 
         }
@@ -89,15 +93,23 @@ public class Player extends Entity {
         // da char_blue.png, ou seja, quantas imagens tem disponiveis para cada
         // tipo de animação
         int animationsMaxIndexes[] = { 6, 6, 8, 8, 1 };
+        int currentAnimationIndex = animationsMaxIndexes[this.getTypeOfAnimation()];
         
-        playerAniTick++;
-        if (playerAniTick >= playerAniSpeed) {
-            playerAniTick = 0;
-            playerAniIndex += 1;
-            if (playerAniIndex >= animationsMaxIndexes[this.getTypeOfAnimation()]) {
-                playerAniIndex = 0;
+        // Aqui fazemos a verificação para saber se a animação atual é diferente da do player caindo
+        // pois como a animação do player caindo so tem tamnho 1 então o playerAniIndex sempre vai ser = 0.
+        if (getTypeOfAnimation() != 4) {
+            playerAniTick++;
+            if (playerAniTick >= playerAniSpeed) {
+                playerAniTick = 0;
+                playerAniIndex += 1;
+                if (playerAniIndex >= currentAnimationIndex) {
+                    playerAniIndex = 0;
+                }
             }
+        } else {
+            playerAniIndex = 0;
         }
+
     }
 
     public void updatePosition() {
@@ -107,12 +119,12 @@ public class Player extends Entity {
             if (!playerJump.coolDownIsOn()) {
                 playerJump.jump();
             } else {
-                System.err.println("Pulo está em Cooldown");
+                System.err.println("Pulo não disponível");
             }
 
         }
         if (playerDirection == Directions.LEFT && canMove[1] && isMoving && !isFalling) {
-            if (isJumping) {
+            if (isJumping && !playerJump.coolDownIsOn()) {
                 playerJump.jumpWithMovimentation(Directions.LEFT);
             } else {
 
@@ -122,7 +134,7 @@ public class Player extends Entity {
         }
 
         if (playerDirection == Directions.RIGHT && canMove[3] && isMoving && !isFalling) {
-            if (isJumping) {
+            if (isJumping && !playerJump.coolDownIsOn()) {
                 playerJump.jumpWithMovimentation(Directions.RIGHT);
             } else {
 
@@ -131,11 +143,19 @@ public class Player extends Entity {
 
         }
 
-        if(!isFalling && !isJumping && !isMoving){
+    }
+
+    private void changeAnimationAfterFalling() {
+        if (!isFalling && !isJumping && KeyboardInputs.sizeDirectionStack() == 0) {
+
             setTypeOfAnimation(0);
+        } else {
+            int lastDirection = KeyboardInputs.getLastDirection();
+            if (lastDirection == Directions.LEFT || lastDirection == Directions.RIGHT) {
+                setTypeOfAnimation(2);
+
+            }
         }
-
-
     }
 
     public int getLifes() {

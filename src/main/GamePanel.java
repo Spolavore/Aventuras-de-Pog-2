@@ -41,14 +41,14 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game){
         // instanciação
-        this.player = new Player(this, 32, 576); // posição atual do player em determinada fase
+        this.player = new Player(this, 0, 576); // posição inicial do player em determinada fase
         this.level = new Level(LevelMatrix.Level1Map,game);
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
         this.mouseInputs = new MouseInputs(this);
 
 
-        level.loadMapAssets(LevelDefaultAssets.LEVEL_1_FLOOR, LevelDefaultAssets.LEVEL_1_PLATAFORM, LevelDefaultAssets.LEVEL_1_LIMITOR);
+        level.loadMapAssets(1);
         player.loadAnimations();
         setPanelSize();
         addMouseListener(mouseInputs);
@@ -68,7 +68,7 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         player.render(g);
-        level.draw(LevelMatrix.Level1Map,g);
+        level.draw(LevelMatrix.Level1Map,g, 1);
     }
 
 
