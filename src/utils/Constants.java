@@ -35,6 +35,7 @@ public abstract class Constants {
         public static String LEVEL_1_FLOOR = Sprites.GROUND_TILE;
         public static String LEVEL_1_LEFT_FLOOR_BORDER = "/tiles/left_grass_tile.png";
         public static String LEVEL_1_RIGHT_FLOOR_BORDER = "/tiles/right_grass_tile.png";
+        public static String LEVEL_1_GRASS_BLOCK = "/tiles/grass_tile.png";
 
         public static String LEVEL_1_LIMITOR = "/tiles/left_border.png";
         public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
@@ -65,7 +66,7 @@ public abstract class Constants {
                 "|      ##      ###                    |".toCharArray(),
                 "|     ####                            |".toCharArray(),
                 "|     ##                              |".toCharArray(),
-                "(#####################################)".toCharArray()
+                "(=====================================)".toCharArray()
         };
     }
 }

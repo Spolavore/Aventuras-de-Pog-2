@@ -72,7 +72,10 @@ public class LevelHandler {
                         case ')':
                             g.drawImage(floorSprites.get(2), i * 32, j * 32, null);
                             break;
-
+                        
+                        case '=':
+                            g.drawImage(floorSprites.get(0), i * 32, j * 32, null);
+                            break;
                         default:
                             break;
 

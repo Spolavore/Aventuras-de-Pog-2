@@ -122,7 +122,7 @@ public class Collisions {
     }
 
 
-    private void checkBoardLimits(){
+    private boolean checkBoardLimits(){
         
     }
     // Função responsável por corrigir a hitbox do personagem em diversos casos
