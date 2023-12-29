@@ -43,12 +43,11 @@ public class Collisions {
         // para uma das 4 direções **/
 
         // Verificacao de limites de borda
-        if (playerMatrixPosition[0] == 0) {
-            player.setPlayerCanMove(false, 1);
-        } else {
+        if (checkBoardLimits(playerMatrixPosition)) {
 
+            checkIfPlayerIsFalling(playerMatrixPosition);
             // Verificação se o player pode se mover para cima
-            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] == '#') {
+            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] != ' ') {
                 player.setPlayerCanMove(false, 0);
 
             } else {
@@ -56,7 +55,7 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para a esquerda
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] == '#') {
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] != ' ') {
                 player.setPlayerCanMove(false, 1);
 
             } else {
@@ -65,7 +64,7 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para baixo
-            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == '#') {
+            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] != ' ') {
                 player.setPlayerCanMove(false, 2);
 
             } else {
@@ -73,27 +72,12 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para a direita
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] == '#') {
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] != ' ') {
                 player.setPlayerCanMove(false, 3);
             } else {
                 player.setPlayerCanMove(true, 3);
             }
 
-            // Verificação se o player está caindo
-            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ') {
-                if (!player.isJumping()) {
-                    player.setFalling(true);
-                    player.setTypeOfAnimation(4);
-                    player.setPlayerCanMove(true, 2);
-                }
-            } else {
-
-                // Se o player chegou no chão então reseta o pulo (Ele pode pular novamente)
-                player.setFalling(false);
-                Jump.reset();
-                player.setPlayerCanMove(false, 2);
-
-            }
 
             boolean isRightDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] + 1] == ' ';
             boolean isLeftDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] - 1] == ' ';
@@ -121,10 +105,48 @@ public class Collisions {
 
     }
 
+    // Função que verifica as colisões de borda antes da colisões de bloco
+    // faz verificações para impedir que o player saia do mapa em todas
+    // as direções. Se nenhum dos testes passarem a função retorna true
+    // e as demais verificações de colisão da função checkColisions são executadas
+    private boolean checkBoardLimits(int[] playerMatrixPosition) {
+        checkIfPlayerIsFalling(playerMatrixPosition);
+        if (playerMatrixPosition[0] == 0 && playerMatrixPosition[1] == 0) {
+            player.setPlayerCanMove(false, 1);
+            player.setPlayerCanMove(false, 0);
+            return false;
+        } else if (playerMatrixPosition[0] == 38 && playerMatrixPosition[1] == 0) {
+            player.setPlayerCanMove(false, 3);
+            player.setPlayerCanMove(false, 3);
+        } else if (playerMatrixPosition[0] == 0) {
+            player.setPlayerCanMove(false, 1);
+            return false;
+        } else if (playerMatrixPosition[0] == 38) {
+            player.setPlayerCanMove(false, 3);
+            return false;
+        } else if (playerMatrixPosition[1] == 0) {
+            player.setPlayerCanMove(false, 0);
+            return false;
+        }
+        return true;
 
-    private boolean checkBoardLimits(){
-        
     }
+
+    private void checkIfPlayerIsFalling(int[] playerMatrixPosition){
+        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ') {
+            if (!player.isJumping()) {
+                player.setFalling(true);
+                player.setTypeOfAnimation(4);
+                player.setPlayerCanMove(true, 2);
+            }
+        } else {
+
+            player.setFalling(false);
+            Jump.reset();
+            player.setPlayerCanMove(false, 2);
+        }
+    }
+
     // Função responsável por corrigir a hitbox do personagem em diversos casos
     // , a fim de traz um fluidez para o jogo e para o bom funcionamento do contato
     // player-ambiente

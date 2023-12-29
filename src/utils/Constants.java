@@ -36,6 +36,7 @@ public abstract class Constants {
         public static String LEVEL_1_LEFT_FLOOR_BORDER = "/tiles/left_grass_tile.png";
         public static String LEVEL_1_RIGHT_FLOOR_BORDER = "/tiles/right_grass_tile.png";
         public static String LEVEL_1_GRASS_BLOCK = "/tiles/grass_tile.png";
+        public static String LEVEL_1_RIGHT_GRASS_BORDER = "/tiles/right_border_grass_tile.png";
 
         public static String LEVEL_1_LIMITOR = "/tiles/left_border.png";
         public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
@@ -46,26 +47,26 @@ public abstract class Constants {
         // Como a tela está setada para 1248 672 precisamos de 39 tyles de chão e 21 de
         // altura
         public static final char[][] Level1Map = {
-                "######################################|".toCharArray(),
-                "|                                     |".toCharArray(),
-                "|                                     |".toCharArray(),
-                "|                      ####           |".toCharArray(),
-                "|                      ####           |".toCharArray(),
-                "|                                     |".toCharArray(),
-                "|                                     |".toCharArray(),
-                "|             ####                    |".toCharArray(),
-                "|             ####                    |".toCharArray(),
-                "|               ##                    |".toCharArray(),
-                "|               ##                    |".toCharArray(),
-                "|               ##  ##                |".toCharArray(),
-                "|                                     |".toCharArray(),
-                "|                       ###           |".toCharArray(),
-                "|                      ##             |".toCharArray(),
-                "|                                     |".toCharArray(),
-                "|                ####                 |".toCharArray(),
-                "|      ##      ###                    |".toCharArray(),
-                "|     ####                            |".toCharArray(),
-                "|     ##                              |".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "               (=                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "                ]                      ".toCharArray(),
+                "             ===]===                   ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
     }

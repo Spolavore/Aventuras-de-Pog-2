@@ -122,7 +122,7 @@ public class KeyboardInputs implements KeyListener {
                     stackDirection(Directions.LEFT);
                     player.setMoving(true);
                     lastDirectionRegistred = Directions.LEFT;
-                    if(!player.isJumping()){
+                    if(!player.isJumping() && !player.isFalling()){
                          player.setTypeOfAnimation(2);
                     }
                    
@@ -148,7 +148,7 @@ public class KeyboardInputs implements KeyListener {
                     stackDirection(Directions.RIGHT);
                     player.setMoving(true);
                     lastDirectionRegistred = Directions.RIGHT;
-                    if(!player.isJumping()){
+                    if(!player.isJumping() && !player.isFalling()){
                         player.setTypeOfAnimation(2);
                     }
                 }

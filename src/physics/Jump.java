@@ -21,7 +21,6 @@ public class Jump {
 
     public void jump() {
         int lastDirection = KeyboardInputs.getLastDirection();
-
         if (player.canMove()[0] && canJumpAgain) {
             player.updateYPosition(-1);
             player.setTypeOfAnimation(3);
