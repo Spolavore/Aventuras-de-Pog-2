@@ -26,8 +26,7 @@ public abstract class Constants {
         public final static String GROUND_TILE_2 = "/tiles/Tile_11.png";
         public final static String LEFT_GROUND_TILE = "/tiles/Tile_09.png";
         public final static String RIGHT_GROUND_TILE = "/tiles/Tile_12.png";
-        public final static String PLATAFORM_STONE_TILE= "/tiles/Tile_30.png";
-       
+        public final static String PLATAFORM_STONE_TILE = "/tiles/Tile_30.png";
 
     }
 
@@ -37,12 +36,13 @@ public abstract class Constants {
         public static String LEVEL_1_RIGHT_FLOOR_BORDER = "/tiles/right_grass_tile.png";
         public static String LEVEL_1_GRASS_BLOCK = "/tiles/grass_tile.png";
         public static String LEVEL_1_RIGHT_GRASS_BORDER = "/tiles/right_border_grass_tile.png";
-
         public static String LEVEL_1_LIMITOR = "/tiles/left_border.png";
         public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
 
+        public static String END_POINT = "/tiles/Tile_95.png";
 
     }
+
     public static class LevelMatrix {
         // Como a tela está setada para 1248 672 precisamos de 39 tyles de chão e 21 de
         // altura
@@ -64,11 +64,58 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
+                "        ==                             ".toCharArray(),
+                "      =                                ".toCharArray(),
+                "     =                               + ".toCharArray(),
+                "(=====================================)".toCharArray()
+        };
+
+        public static final char[][] Level2Map = {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "              =======                  ".toCharArray(),
+                "             =        =                ".toCharArray(),
+                "            =         =                ".toCharArray(),
+                "                      =                ".toCharArray(),
+                "                    =                  ".toCharArray(),
+                "                   =                   ".toCharArray(),
+                "                 =                     ".toCharArray(),
+                "               =                       ".toCharArray(),
+                "             =                         ".toCharArray(),
+                "             ==========                ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                     + ".toCharArray(),
+                "(=====================================)".toCharArray()
+        };
+
+         public static final char[][] Level3Map = {
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                                       ".toCharArray(),
+                "              =======                  ".toCharArray(),
+                "             =        =                ".toCharArray(),
+                "            =         =                ".toCharArray(),
+                "                      =                ".toCharArray(),
+                "                =====                  ".toCharArray(),
+                "               =====                   ".toCharArray(),
+                "                    =                  ".toCharArray(),
+                "                     =                 ".toCharArray(),
+                "            =        =                 ".toCharArray(),
+                "             =       =                 ".toCharArray(),
+                "              =======                  ".toCharArray(),
+                "                                       ".toCharArray(),
+                "       ======                          ".toCharArray(),
+                "      =                                ".toCharArray(),
+                "     )                                 ".toCharArray(),
+                "    =                                + ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
     }
 }
-

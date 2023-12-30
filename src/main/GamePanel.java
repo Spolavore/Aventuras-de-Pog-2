@@ -38,17 +38,18 @@ public class GamePanel extends JPanel {
     private LevelHandler levelHandler;
     private Collisions collisions;
     private Gravity gravity;
+    private static boolean changeLevel = false;
 
     public GamePanel(Game game){
         // instanciação
-        this.player = new Player(this, 0, 576); // posição inicial do player em determinada fase
-        this.level = new Level(LevelMatrix.Level1Map,game);
+        this.player = new Player(this); // posição inicial do player em determinada fase
+        this.level = new Level(game);
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
         this.mouseInputs = new MouseInputs(this);
 
 
-        level.loadMapAssets(1);
+        level.loadMapAssets();
         player.loadAnimations();
         setPanelSize();
         addMouseListener(mouseInputs);
@@ -59,6 +60,12 @@ public class GamePanel extends JPanel {
    
 
     public void updateGame(){
+        
+        if(changeLevel){
+            player.resetToInitialPosition();
+            collisions.updateLevelToCheck(level.getMatrixMap());
+            changeLevel = false;
+        }
         player.update();
         collisions.checkCollisions();
         gravity.gravityForce();
@@ -68,7 +75,8 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         player.render(g);
-        level.draw(LevelMatrix.Level1Map,g, 1);
+
+        level.draw(level.getMatrixMap(),g, level.getCurrentLevel());
     }
 
 
@@ -96,5 +104,10 @@ public class GamePanel extends JPanel {
     // Retorna o Mapa Atual da fase
     public char[][] getNowMap(){
         return this.level.getMatrixMap();
+    }
+
+
+    public static void changeLevel(boolean bool){
+        changeLevel = bool;
     }
 }

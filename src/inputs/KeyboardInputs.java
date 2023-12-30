@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import entities.Player;
+import levels.Level;
 import main.GamePanel;
 import physics.Collisions;
 import utils.Constants.Directions;
@@ -154,7 +155,13 @@ public class KeyboardInputs implements KeyListener {
                 }
 
                 break;
+            
 
+            case 'E':
+                if(player.isInEndpoint()){
+                    Level.goNextLevel();
+                }
+                break;
             case ' ':
 
                 player.setJumping(true);

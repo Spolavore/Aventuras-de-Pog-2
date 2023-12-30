@@ -22,8 +22,10 @@ public class Player extends Entity {
     private boolean isMoving = false;
     private boolean isJumping = false;
     private boolean isFalling = false;
+    private boolean isInEndpoint = false;
     private BufferedImage img;
     private Jump playerJump;
+    public static final int[] playerInitialPosition = { 0, 576 };
     private boolean[] canMove = { true, true, true, true }; // array que armazena as direções que o player pode se mover
                                                             // 0: W | 1: A | 2: S | 3: D
 
@@ -35,8 +37,8 @@ public class Player extends Entity {
     private BufferedImage[][] animations;
     private int playerAniTick, playerAniIndex, playerAniSpeed = 20;
 
-    public Player(GamePanel g, int x, int y) {
-        super(x, y);
+    public Player(GamePanel g) {
+        super(playerInitialPosition[0], playerInitialPosition[1]);
         this.gamePanel = g;
         this.lifes = 0;
         this.playerJump = new Jump(this); // Inicializa o jump permitindo que o player pule
@@ -48,7 +50,7 @@ public class Player extends Entity {
         updateAnimationTick();
         updatePosition();
         changeAnimationAfterFalling();
-        // System.out.println("Player X: " + this.getX() + " Player Y: " + this.getY());
+
     }
 
     public void render(Graphics g) {
@@ -94,9 +96,11 @@ public class Player extends Entity {
         // tipo de animação
         int animationsMaxIndexes[] = { 6, 6, 8, 8, 1 };
         int currentAnimationIndex = animationsMaxIndexes[this.getTypeOfAnimation()];
-        
-        // Aqui fazemos a verificação para saber se a animação atual é diferente da do player caindo
-        // pois como a animação do player caindo so tem tamnho 1 então o playerAniIndex sempre vai ser = 0.
+
+        // Aqui fazemos a verificação para saber se a animação atual é diferente da do
+        // player caindo
+        // pois como a animação do player caindo so tem tamnho 1 então o playerAniIndex
+        // sempre vai ser = 0.
         if (getTypeOfAnimation() != 4) {
             playerAniTick++;
             if (playerAniTick >= playerAniSpeed) {
@@ -158,6 +162,11 @@ public class Player extends Entity {
         }
     }
 
+    public void resetToInitialPosition(){
+        this.setXY(playerInitialPosition[0],playerInitialPosition[1]);
+       
+    }
+
     public int getLifes() {
         return lifes;
     }
@@ -184,6 +193,14 @@ public class Player extends Entity {
 
     public boolean isMoving() {
         return isMoving;
+    }
+
+    public boolean isInEndpoint() {
+        return isInEndpoint;
+    }
+
+    public void setIsInEndpoint(boolean bool) {
+        this.isInEndpoint = bool;
     }
 
     public void setJumping(boolean bool) {

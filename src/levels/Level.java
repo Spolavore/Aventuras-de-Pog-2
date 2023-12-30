@@ -1,19 +1,21 @@
 package levels;
 
 import main.Game;
+import main.GamePanel;
 import utils.Constants.LevelDefaultAssets;
+import utils.Constants.LevelMatrix;
 
 import java.awt.Graphics;
 
 import levels.LevelHandler;
 
 public class Level {
-    private char[][] LevelMap;
+    private static char[][] LevelMap;
     private LevelHandler levelHandler;
- 
+    private static int currentLevel = 1;
 
-    public Level(char[][] LevelMap, Game game){
-        this.LevelMap = LevelMap;
+    public Level(Game game){
+        LevelMap = LevelMatrix.Level1Map;
         this.levelHandler = new LevelHandler(game);
         
     }
@@ -24,8 +26,8 @@ public class Level {
     }
 
 
-    public void loadMapAssets(int level){
-        if(level == 1){
+    public void loadMapAssets(){
+        if(currentLevel == 1 || currentLevel == 2){
             String floorAssets[] = {LevelDefaultAssets.LEVEL_1_GRASS_BLOCK, LevelDefaultAssets.LEVEL_1_LEFT_FLOOR_BORDER,
             LevelDefaultAssets.LEVEL_1_RIGHT_FLOOR_BORDER,LevelDefaultAssets.LEVEL_1_RIGHT_GRASS_BORDER} ;
             String plataformsAssets[] ={LevelDefaultAssets.LEVEL_1_PLATAFORM};
@@ -36,7 +38,29 @@ public class Level {
 
 
     public char[][] getMatrixMap() {
-        return this.LevelMap;
+        return LevelMap;
     }
 
+
+    public static void goNextLevel(){
+        if(currentLevel < 3){
+            currentLevel += 1;
+            switch (currentLevel) {
+                case 2:
+                    LevelMap = LevelMatrix.Level2Map;
+                    break;
+                
+                case 3:
+                    LevelMap = LevelMatrix.Level3Map;
+                    break;
+                default:
+                    break;
+            }
+        GamePanel.changeLevel(true);
+        }
+    }
+
+    public int getCurrentLevel(){
+        return currentLevel;
+    }
 }
