@@ -9,13 +9,16 @@ import javax.imageio.ImageIO;
 
 import inputs.KeyboardInputs;
 import main.GamePanel;
+import physics.Damage;
 import physics.Jump;
 import utils.AssetsHandler;
+import utils.Constants.BufferedImagesAssets;
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
 
 public class Player extends Entity {
     private GamePanel gamePanel;
+    private Damage damage;
     private int lifes;
     private int typeOfAnimation;
     private int playerDirection;
@@ -40,21 +43,24 @@ public class Player extends Entity {
     public Player(GamePanel g) {
         super(playerInitialPosition[0], playerInitialPosition[1]);
         this.gamePanel = g;
-        this.lifes = 0;
+        this.lifes = 3;
         this.playerJump = new Jump(this); // Inicializa o jump permitindo que o player pule
+        this.damage = new Damage(this);
         loadAnimations();
     }
 
     public void update() {
-
+      
         updateAnimationTick();
         updatePosition();
+        damage.applyDamage();
         changeAnimationAfterFalling();
 
     }
 
     public void render(Graphics g) {
         g.drawImage(animations[typeOfAnimation][playerAniIndex], (int) getX(), (int) getY(), 64, 64, null);
+        drawPlayerLife(g);
     }
 
     // 0 - 5
@@ -167,12 +173,19 @@ public class Player extends Entity {
        
     }
 
+    private void drawPlayerLife(Graphics g){
+        int imgSpacement = 30;
+        for(int i = 0; i < getLifes(); i++){
+            g.drawImage(BufferedImagesAssets.playerLifeImg, 0+(imgSpacement*i) , 0 , 64, 64, null);
+        }
+    }
+
     public int getLifes() {
         return lifes;
     }
 
-    public void setLifes(int lifes) {
-        this.lifes = lifes;
+    public void decreaseLife() {
+        this.lifes -= 1;
     }
 
     public int getTypeOfAnimation() {

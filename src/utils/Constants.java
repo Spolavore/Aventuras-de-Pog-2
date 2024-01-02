@@ -1,5 +1,7 @@
 package utils;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Constants {
 
     public static class Directions {
@@ -43,6 +45,10 @@ public abstract class Constants {
 
     }
 
+    public static class BufferedImagesAssets{
+        public static BufferedImage playerLifeImg = AssetsHandler.LoadAssets("/player/player_life.png");
+    }
+
     public static class LevelMatrix {
         // Como a tela está setada para 1248 672 precisamos de 39 tyles de chão e 21 de
         // altura
@@ -64,9 +70,9 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "        ==                             ".toCharArray(),
-                "      =                                ".toCharArray(),
-                "     =                               + ".toCharArray(),
+                "          ===                          ".toCharArray(),
+                "                                       ".toCharArray(),
+                "     ==                              + ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 
@@ -118,4 +124,6 @@ public abstract class Constants {
                 "(=====================================)".toCharArray()
         };
     }
+
+
 }

@@ -18,7 +18,6 @@ public abstract class AssetsHandler {
     public static BufferedImage LoadAssets(String assetPath){
           InputStream is = AssetsHandler.class.getResourceAsStream(assetPath);
       
-          System.out.println(is);
           BufferedImage img = null;
         try {
 
