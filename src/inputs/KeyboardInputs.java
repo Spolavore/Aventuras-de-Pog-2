@@ -161,6 +161,11 @@ public class KeyboardInputs implements KeyListener {
                 if(player.isInEndpoint()){
                     Level.goNextLevel();
                 }
+                if(player.isInChest()){
+                    player.setIsTryingtoOpenChest(true);
+                }else {
+                    player.setIsTryingtoOpenChest(false);
+                }
                 break;
             case ' ':
 

@@ -11,10 +11,6 @@ public class Damage {
 
     }
 
-
-
-
-
     public void applyDamage(){
         verifyBlocksFelt();
        

@@ -11,6 +11,7 @@ public class GameWindow extends JFrame{
 
     public GameWindow(GamePanel gamePanel){
         JFrame jframe = new JFrame();
+        jframe.setTitle("As Aventuras de Pog 2");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.add(gamePanel);
         // jframe.setLocationRelativeTo(null); // coloca o janela no centro da tela do usuário

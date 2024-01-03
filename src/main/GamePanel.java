@@ -3,6 +3,10 @@ package main;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import entities.Chest;
 import entities.Player;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
@@ -11,6 +15,7 @@ import physics.Collisions;
 import physics.Gravity;
 import levels.Level;
 import utils.Constants;
+import utils.Constants.BufferedImagesAssets;
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
 import utils.Constants.Directions.*;
@@ -40,14 +45,13 @@ public class GamePanel extends JPanel {
     private Gravity gravity;
     private static boolean changeLevel = false;
 
-    public GamePanel(Game game){
+    public GamePanel(Game game) {
         // instanciação
         this.player = new Player(this); // posição inicial do player em determinada fase
         this.level = new Level(game);
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
         this.mouseInputs = new MouseInputs(this);
-
 
         level.loadMapAssets();
         player.loadAnimations();
@@ -57,28 +61,26 @@ public class GamePanel extends JPanel {
         addMouseMotionListener(mouseInputs);
     }
 
-   
-
-    public void updateGame(){
-        
-        if(changeLevel){
+    public void updateGame() {
+        if (changeLevel) {
             player.resetToInitialPosition();
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
         }
+        Chest.updateAnimationTick();
         player.update();
         collisions.checkCollisions();
         gravity.gravityForce();
 
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-     
-        player.render(g);
-        level.draw(level.getMatrixMap(),g, level.getCurrentLevel());
-    }
 
+        player.render(g);
+        level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
+        drawGameStatus(g);
+    }
 
     private void setPanelSize() {
         Dimension size = new Dimension(GameDimentions.GAME_WIDTH, GameDimentions.GAME_HEIGHT);
@@ -88,10 +90,9 @@ public class GamePanel extends JPanel {
         setMaximumSize(size);
     }
 
-
-    // Função que controla o jogo quando o usuário minimiza o jogo ou 
+    // Função que controla o jogo quando o usuário minimiza o jogo ou
     // clica fora da tela
-    public void windowLostFocus(){
+    public void windowLostFocus() {
         System.out.println("Jogo foi minimizado");
         // Para o jogador caso ele esteja se movendo e
         // limpa a pilha de direções para eliminar qualquer
@@ -100,14 +101,51 @@ public class GamePanel extends JPanel {
         player.setTypeOfAnimation(0);
         KeyboardInputs.clearStack();
     }
-    
+
     // Retorna o Mapa Atual da fase
-    public char[][] getNowMap(){
+    public char[][] getNowMap() {
         return this.level.getMatrixMap();
     }
 
-
-    public static void changeLevel(boolean bool){
+    public static void changeLevel(boolean bool) {
         changeLevel = bool;
+    }
+
+    private void drawGameStatus(Graphics g) {
+        drawScore(g);
+        drawPlayerLife(g);
+        drawChestStatus(g);
+    }
+
+    private void drawPlayerLife(Graphics g) {
+        int imgSpacement = 40;
+        for (int i = 0; i < player.getLifes(); i++) {
+            g.drawImage(BufferedImagesAssets.playerLifeImg, 0 + (imgSpacement * i), 0, 80, 80, null);
+        }
+    }
+
+    private void drawScore(Graphics g) {
+        Font fontScore = new Font("Arial", Font.BOLD, 30);
+        Font fontText = new Font("Arial", Font.TRUETYPE_FONT, 30);
+        int scoreXPosition = 1150;
+        g.setFont(fontText);
+        g.drawString("Score:", scoreXPosition - 100, 40);
+        g.setFont(fontScore);
+        g.setColor(Color.BLUE);
+        g.drawString(Integer.toString(player.getScore()), scoreXPosition, 40);
+    }
+
+    private void drawChestStatus(Graphics g) {
+        Font fontText = new Font("Arial", Font.TRUETYPE_FONT, 27);
+        Font fontChests = new Font("Arial", Font.BOLD, 30);
+
+        g.setFont(fontText);
+        g.setColor(Color.black);
+        g.drawString("Chests Found:", 440, 40);
+        g.setFont(fontChests);
+        g.setColor(Color.BLUE);
+        g.drawString("0 of " + Integer.toString(Chest.chestsInLevel), 634, 40);
+
+
     }
 }

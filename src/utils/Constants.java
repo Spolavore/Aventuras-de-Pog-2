@@ -47,6 +47,7 @@ public abstract class Constants {
 
     public static class BufferedImagesAssets{
         public static BufferedImage playerLifeImg = AssetsHandler.LoadAssets("/player/player_life.png");
+        public static BufferedImage chestImage = AssetsHandler.LoadAssets("/objects/Chests.png");
     }
 
     public static class LevelMatrix {
@@ -69,10 +70,10 @@ public abstract class Constants {
                 "             ===]===                   ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "                                       ".toCharArray(),
+                "            c                          ".toCharArray(),
                 "          ===                          ".toCharArray(),
                 "                                       ".toCharArray(),
-                "     ==                              + ".toCharArray(),
+                "     ==             c                + ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 

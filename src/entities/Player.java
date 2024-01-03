@@ -1,5 +1,4 @@
 package entities;
-
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -25,9 +24,12 @@ public class Player extends Entity {
     private boolean isMoving = false;
     private boolean isJumping = false;
     private boolean isFalling = false;
+    private boolean isInChest = false;
+    private boolean isTryingtoOpenChest = false;
     private boolean isInEndpoint = false;
     private BufferedImage img;
     private Jump playerJump;
+    private int score;
     public static final int[] playerInitialPosition = { 0, 576 };
     private boolean[] canMove = { true, true, true, true }; // array que armazena as direções que o player pode se mover
                                                             // 0: W | 1: A | 2: S | 3: D
@@ -40,10 +42,12 @@ public class Player extends Entity {
     private BufferedImage[][] animations;
     private int playerAniTick, playerAniIndex, playerAniSpeed = 20;
 
+
     public Player(GamePanel g) {
         super(playerInitialPosition[0], playerInitialPosition[1]);
         this.gamePanel = g;
         this.lifes = 3;
+        this.score = 0;
         this.playerJump = new Jump(this); // Inicializa o jump permitindo que o player pule
         this.damage = new Damage(this);
         loadAnimations();
@@ -53,6 +57,7 @@ public class Player extends Entity {
       
         updateAnimationTick();
         updatePosition();
+        
         damage.applyDamage();
         changeAnimationAfterFalling();
 
@@ -60,7 +65,6 @@ public class Player extends Entity {
 
     public void render(Graphics g) {
         g.drawImage(animations[typeOfAnimation][playerAniIndex], (int) getX(), (int) getY(), 64, 64, null);
-        drawPlayerLife(g);
     }
 
     // 0 - 5
@@ -77,7 +81,7 @@ public class Player extends Entity {
     public void loadAnimations() {
         img = AssetsHandler.LoadAssets(Sprites.PLAYER);
         animations = new BufferedImage[6][8];
-        // Pega-se uma subimagem da imagem original (res/char_blue.png)
+        // Pega-se uma subimagem da imagem original (assets/player/char_blue.png)
         // recortando conforme a imagem e colocando as subimagens separada
         // na matriz animations
         for (int i = 0; i < 6; i++) {
@@ -173,12 +177,7 @@ public class Player extends Entity {
        
     }
 
-    private void drawPlayerLife(Graphics g){
-        int imgSpacement = 30;
-        for(int i = 0; i < getLifes(); i++){
-            g.drawImage(BufferedImagesAssets.playerLifeImg, 0+(imgSpacement*i) , 0 , 64, 64, null);
-        }
-    }
+
 
     public int getLifes() {
         return lifes;
@@ -224,6 +223,23 @@ public class Player extends Entity {
         return isJumping;
     }
 
+    public boolean isInChest(){
+        return isInChest;
+    }
+
+    public void setIsInChest(boolean bool){
+        isInChest = bool;
+    }
+
+    public boolean isTryingtoOpenChest(){
+        return isTryingtoOpenChest;
+    }
+    
+    public void setIsTryingtoOpenChest(boolean bool){
+        this.isTryingtoOpenChest = bool;
+
+    }
+
     public boolean isFalling() {
         return isFalling;
     }
@@ -255,5 +271,9 @@ public class Player extends Entity {
     public int playerYPosition() {
         return this.getY();
     }
+    
 
+    public int getScore() {
+        return score;
+    }
 }

@@ -1,5 +1,6 @@
 package physics;
 
+import entities.Chest;
 import entities.Player;
 import inputs.KeyboardInputs;
 import utils.Constants.Directions;
@@ -53,8 +54,20 @@ public class Collisions {
             } else{
                 player.setIsInEndpoint(false);
             }
+
+            if(checkIfPlayerInChest(playerMatrixPosition, 0, 0)){
+                player.setIsInChest(true);
+                if(player.isTryingtoOpenChest()){
+                    Chest.openChest(player.getX() + hitboxX, player.getY()+ hitboxY);
+                }
+            } else{
+                player.setIsInChest(false);
+            }
+
             // Verificação se o player pode se mover para cima
-            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] != ' ' && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, -1)) {
+            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] != ' ' 
+            && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, -1)
+            && !checkIfPlayerInChest(playerMatrixPosition, 0, -1)) {
                 player.setPlayerCanMove(false, 0);
 
             } else {
@@ -62,7 +75,9 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para a esquerda
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] != ' ' && !checkIfPlayerInEndpoint(playerMatrixPosition, -1, 0)) {
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] != ' ' 
+            && !checkIfPlayerInEndpoint(playerMatrixPosition, -1, 0)
+            && !checkIfPlayerInChest(playerMatrixPosition, -1, 0)) {
                 player.setPlayerCanMove(false, 1);
 
             } else {
@@ -71,7 +86,9 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para baixo
-            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] != ' ' && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1)) {
+            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] != ' ' 
+            && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1)
+            && !checkIfPlayerInChest(playerMatrixPosition, 0, 1)) {
                 player.setPlayerCanMove(false, 2);
 
             } else {
@@ -79,7 +96,9 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para a direita
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] != ' ' && !checkIfPlayerInEndpoint(playerMatrixPosition, 1, 0)) {
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] != ' ' 
+            && !checkIfPlayerInEndpoint(playerMatrixPosition, 1, 0)
+            && !checkIfPlayerInChest(playerMatrixPosition,1,0)) {
                 player.setPlayerCanMove(false, 3);
             } else {
                 player.setPlayerCanMove(true, 3);
@@ -140,7 +159,9 @@ public class Collisions {
     }
 
     private void checkIfPlayerIsFalling(int[] playerMatrixPosition){
-        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ' || checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1) ) {
+        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ' 
+        || checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1) 
+        || checkIfPlayerInChest(playerMatrixPosition, 0, 1)) {
             if (!player.isJumping()) {
                 player.setFalling(true);
                 player.setTypeOfAnimation(4);
@@ -192,6 +213,13 @@ public class Collisions {
         }
     }
 
+
+    private boolean checkIfPlayerInChest(int[] playerMatrixPosition, int xAcres, int yAcres){
+        
+        return this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == 'c' ||
+        this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == 'C';
+
+    }
     // Função auxiliar para o método check colissions para saber se o player está em cima do endpoint
     private boolean checkIfPlayerInEndpoint(int[] playerMatrixPosition, int xAcres, int yAcres ){
         return this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == '+';
