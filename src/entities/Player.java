@@ -276,4 +276,8 @@ public class Player extends Entity {
     public int getScore() {
         return score;
     }
+
+    public void increaseScore(int score){
+        this.score += score;
+    }
 }

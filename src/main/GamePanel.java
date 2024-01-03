@@ -6,11 +6,12 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
 
-import entities.Chest;
 import entities.Player;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 import levels.LevelHandler;
+import objects.Chest;
+import objects.ChestHandler;
 import physics.Collisions;
 import physics.Gravity;
 import levels.Level;
@@ -67,7 +68,8 @@ public class GamePanel extends JPanel {
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
         }
-        Chest.updateAnimationTick();
+        
+        ChestHandler.updateChests();
         player.update();
         collisions.checkCollisions();
         gravity.gravityForce();
@@ -144,7 +146,7 @@ public class GamePanel extends JPanel {
         g.drawString("Chests Found:", 440, 40);
         g.setFont(fontChests);
         g.setColor(Color.BLUE);
-        g.drawString("0 of " + Integer.toString(Chest.chestsInLevel), 634, 40);
+        g.drawString("0 of " + Integer.toString(ChestHandler.getChestsInLevel()), 634, 40);
 
 
     }

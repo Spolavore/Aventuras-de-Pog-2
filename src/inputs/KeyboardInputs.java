@@ -168,8 +168,10 @@ public class KeyboardInputs implements KeyListener {
                 }
                 break;
             case ' ':
-
-                player.setJumping(true);
+                
+                if(!player.isFalling()){
+                    player.setJumping(true);
+                }
                 
                 break;
             default:

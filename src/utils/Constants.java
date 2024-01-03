@@ -41,6 +41,8 @@ public abstract class Constants {
         public static String LEVEL_1_LIMITOR = "/tiles/left_border.png";
         public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
 
+        public static String LEVEL_1_STONE_PLATAFORM = "/tiles/block_stone.png";
+
         public static String END_POINT = "/tiles/Tile_95.png";
 
     }

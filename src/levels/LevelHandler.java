@@ -4,8 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import entities.Chest;
 import main.Game;
+import objects.Chest;
+import objects.ChestHandler;
 import utils.AssetsHandler;
 import utils.Constants.BufferedImagesAssets;
 import utils.Constants.LevelDefaultAssets;
@@ -54,7 +55,7 @@ public class LevelHandler {
         int numOfChest = 0;
         ArrayList<Integer> chestsXPositions = new ArrayList<>();
         ArrayList<Integer> chestsYPositions = new ArrayList<>();
-
+        ChestHandler chestHandler = new ChestHandler();
         if (level == 1 || level == 2 || level == 3) {
             for (int i = 0; i < Matrix[0].length; i++) {
                 for (int j = 0; j < Matrix.length; j++) {
@@ -76,18 +77,18 @@ public class LevelHandler {
                             break;
                         case ']':
                             g.drawImage(floorSprites.get(3), i * 32, j * 32, null);
+                            break;
 
                         case '+':
                             g.drawImage(endPoint, i * 32, j * 32, null);
                             break;
                         case 'c':
-
-                            Chest chest = new Chest(i * 32, j * 32);
                             chestsXPositions.add(i * 32);
                             chestsYPositions.add(j * 32);
-                            chest.drawChest(g);
+                           
                             numOfChest++;
                             break;
+                        
                         default:
                             break;
 
@@ -101,10 +102,16 @@ public class LevelHandler {
         // pois estamos em um laço while do game então as informações
         // sempre estarão presentes. Logo precisamos zerá-las para que
         // não sejam somadas
-        Chest.setNumOfChests(numOfChest);
-        Chest.setAllChestsPositions(chestsXPositions, chestsYPositions);
+        ChestHandler.setNumOfChests(numOfChest);
         numOfChest = 0;
         
+
+        if(chestsXPositions.size() != 0 ){
+
+            ChestHandler.setAllChestsPositions(chestsXPositions, chestsYPositions);
+            chestHandler.createAllChest();
+            chestHandler.drawAllChests(g);
+        }
 
     }
 

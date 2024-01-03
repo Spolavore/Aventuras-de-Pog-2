@@ -1,8 +1,8 @@
 package physics;
 
-import entities.Chest;
 import entities.Player;
 import inputs.KeyboardInputs;
+import objects.ChestHandler;
 import utils.Constants.Directions;
 
 // As colisões são verificadas quando o usuário tenta se movimentar, ou seja, elas estão sendo 
@@ -58,7 +58,7 @@ public class Collisions {
             if(checkIfPlayerInChest(playerMatrixPosition, 0, 0)){
                 player.setIsInChest(true);
                 if(player.isTryingtoOpenChest()){
-                    Chest.openChest(player.getX() + hitboxX, player.getY()+ hitboxY);
+                    ChestHandler.openChestCallBack(player);
                 }
             } else{
                 player.setIsInChest(false);
