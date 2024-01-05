@@ -3,6 +3,7 @@ package physics;
 import entities.Player;
 import inputs.KeyboardInputs;
 import objects.ChestHandler;
+import soundtrack.SoundHandler;
 import utils.Constants.Directions;
 
 // As colisões são verificadas quando o usuário tenta se movimentar, ou seja, elas estão sendo 

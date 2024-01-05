@@ -1,5 +1,7 @@
 package main;
 
+import soundtrack.SoundHandler;
+
 public class Game implements Runnable {
     private GamePanel gamePanel;
     private GameWindow gameWindow;
@@ -15,6 +17,7 @@ public class Game implements Runnable {
     public Game(){
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(gamePanel);
+        
         this.gamePanel.requestFocus(); // faz com que o Panel ( o que está dentro da janela ) receba os inputs do usuário
         startGameLoop();
     }
@@ -24,6 +27,7 @@ public class Game implements Runnable {
     }
     @Override  
     public void run(){
+        
         double timePerFrame = 1000000000.0 / FPS_SET;
         double timePerUpdate = 1000000000.0 / UPS_SET;
 
@@ -74,6 +78,7 @@ public class Game implements Runnable {
     }
 
     private void startGameLoop(){
+        SoundHandler.playLoopingSound("sounds/background_music.wav");
         this.gameThread = new Thread(this);
         gameThread.start();
     }

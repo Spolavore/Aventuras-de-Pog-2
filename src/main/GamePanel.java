@@ -14,36 +14,27 @@ import objects.Chest;
 import objects.ChestHandler;
 import physics.Collisions;
 import physics.Gravity;
+import screens.LoseScreen;
+import soundtrack.SoundHandler;
 import levels.Level;
-import utils.Constants;
 import utils.Constants.BufferedImagesAssets;
-import utils.Constants.Directions;
-import utils.Constants.Sprites;
-import utils.Constants.Directions.*;
-import utils.Constants.GameDimentions;
-import utils.Constants.LevelDefaultAssets;
-import utils.Constants.LevelMatrix;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+
 
 import static utils.Constants.GameDimentions;
 import static utils.Constants.LevelMatrix;
 
 public class GamePanel extends JPanel {
-    private Game game;
     private Player player;
     private Level level;
     private MouseInputs mouseInputs;
-    private LevelHandler levelHandler;
     private Collisions collisions;
     private Gravity gravity;
+    private Color backgroundColor = Color.WHITE;
     private static boolean changeLevel = false;
 
     public GamePanel(Game game) {
@@ -60,6 +51,8 @@ public class GamePanel extends JPanel {
         addMouseListener(mouseInputs);
         addKeyListener(new KeyboardInputs(this, this.player));
         addMouseMotionListener(mouseInputs);
+
+      
     }
 
     public void updateGame() {
@@ -78,10 +71,19 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if(player.getLifes() == 0){
+            player.render(g);
+            level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
+            drawGameStatus(g);
+        } else{
+            LoseScreen loseScreen = new LoseScreen(this);
+            loseScreen.draw(g, player.getScore());
+        }
 
-        player.render(g);
-        level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
-        drawGameStatus(g);
+
+        setBackground(backgroundColor); // Define a cor de fundo inicial -> como ela muda conforme a tela (vitoria ou derrota)
+                                        // devemos colocar ela dentro do gameLoop
+
     }
 
     private void setPanelSize() {
@@ -146,8 +148,12 @@ public class GamePanel extends JPanel {
         g.drawString("Chests Found:", 440, 40);
         g.setFont(fontChests);
         g.setColor(Color.BLUE);
-        g.drawString("0 of " + Integer.toString(ChestHandler.getChestsInLevel()), 634, 40);
+        g.drawString(ChestHandler.getChestsOpened() + " of " + Integer.toString(ChestHandler.getChestsInLevel()), 634, 40);
 
 
+    }
+
+    public void changeBackgroundColor(Color color){
+        this.backgroundColor = color;
     }
 }

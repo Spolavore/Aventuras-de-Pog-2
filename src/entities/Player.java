@@ -10,6 +10,7 @@ import inputs.KeyboardInputs;
 import main.GamePanel;
 import physics.Damage;
 import physics.Jump;
+import soundtrack.SoundHandler;
 import utils.AssetsHandler;
 import utils.Constants.BufferedImagesAssets;
 import utils.Constants.Directions;
@@ -57,7 +58,6 @@ public class Player extends Entity {
       
         updateAnimationTick();
         updatePosition();
-        
         damage.applyDamage();
         changeAnimationAfterFalling();
 
@@ -184,6 +184,7 @@ public class Player extends Entity {
     }
 
     public void decreaseLife() {
+        SoundHandler.playSound("sounds/damage.wav");
         this.lifes -= 1;
     }
 

@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
@@ -14,6 +15,7 @@ public class GameWindow extends JFrame{
         jframe.setTitle("As Aventuras de Pog 2");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.add(gamePanel);
+       
         // jframe.setLocationRelativeTo(null); // coloca o janela no centro da tela do usuário
         jframe.setResizable(false);
         jframe.pack();

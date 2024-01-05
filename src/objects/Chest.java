@@ -55,22 +55,6 @@ public class Chest {
         }
     }
 
-    public void openChest(int xPlayerPosition, int yPlayerPosition, Player player) {
-        int playerXPositionConverter = xPlayerPosition / 32;
-        int playerYPositionConverter = yPlayerPosition / 32;
-
-        if (xPos == playerXPositionConverter * 32 && yPos == playerYPositionConverter * 32) {
-
-            player.increaseScore(300);
-            player.setIsTryingtoOpenChest(false);
-            loadOpenAnimation = true;
-        } else {
-
-            loadOpenAnimation = false;
-
-        }
-
-    }
 
     private void loadDefaultChestAnimation() {
         chestAnimations = new BufferedImage[5];

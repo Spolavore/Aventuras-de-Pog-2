@@ -8,6 +8,7 @@ import entities.Player;
 import levels.Level;
 import main.GamePanel;
 import physics.Collisions;
+import soundtrack.SoundHandler;
 import utils.Constants.Directions;
 import utils.Constants.Directions.*;
 
@@ -151,6 +152,7 @@ public class KeyboardInputs implements KeyListener {
                     lastDirectionRegistred = Directions.RIGHT;
                     if(!player.isJumping() && !player.isFalling()){
                         player.setTypeOfAnimation(2);
+                        
                     }
                 }
 
@@ -170,6 +172,10 @@ public class KeyboardInputs implements KeyListener {
             case ' ':
                 
                 if(!player.isFalling()){
+                    if(!player.isJumping()){
+
+                        SoundHandler.playSound("sounds/Retro Jump Classic.wav");
+                    }
                     player.setJumping(true);
                 }
                 

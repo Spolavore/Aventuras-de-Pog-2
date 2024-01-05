@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
         "src",
-        "assets"
+        "assets",
+        "sounds"
     ]
 }

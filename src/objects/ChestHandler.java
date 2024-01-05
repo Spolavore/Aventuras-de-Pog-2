@@ -4,11 +4,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import entities.Player;
+import soundtrack.SoundHandler;
 
 public class ChestHandler {
     private static ArrayList<Integer> xPositionAllChests = new ArrayList<>();
     private static ArrayList<Integer> yPositionAllChests = new ArrayList<>();
     private static int chestsInLevel = 0;
+    private static int chestsOpened = 0;
 
     private static ArrayList<Chest> chestList = new ArrayList<>();
 
@@ -45,8 +47,21 @@ public class ChestHandler {
         chestsInLevel = numOfChest;
     }
 
+    public static void setChestsOpened(int chestOpened){
+        chestsOpened = chestOpened;
+    }
+
+    public static void increaseChestOpened(){
+        chestsOpened++;
+    }
+
     public static int getChestsInLevel() {
         return chestsInLevel;
+    }
+
+
+    public static int getChestsOpened(){
+        return chestsOpened;
     }
 
     public static void openChestCallBack(Player player) {
@@ -66,6 +81,8 @@ public class ChestHandler {
 
             if (xCmp < xAcceptableDistance && yCmp < yAcceptableDistance && !currentChest.isOpened()) {
                 currentChest.changeTypeOfAnimation("opening");
+                ChestHandler.increaseChestOpened();
+                SoundHandler.playSound("sounds/coin_effect.wav");
                 player.increaseScore(200);
                 player.setIsTryingtoOpenChest(false);
                 currentChest.setIsOpened(true);
