@@ -56,7 +56,7 @@ public class LevelHandler {
         ArrayList<Integer> chestsXPositions = new ArrayList<>();
         ArrayList<Integer> chestsYPositions = new ArrayList<>();
         ChestHandler chestHandler = new ChestHandler();
-        if (level == 1 || level == 2 || level == 3) {
+        if (level == 1) {
             for (int i = 0; i < Matrix[0].length; i++) {
                 for (int j = 0; j < Matrix.length; j++) {
                     switch (Matrix[j][i]) {
@@ -82,18 +82,96 @@ public class LevelHandler {
                         case '+':
                             g.drawImage(endPoint, i * 32, j * 32, null);
                             break;
+                            
                         case 'c':
                             chestsXPositions.add(i * 32);
-                            chestsYPositions.add(j * 32);
-                           
+                            chestsYPositions.add(j * 32);                           
                             numOfChest++;
                             break;
                         
                         default:
                             break;
-
                     }
+                }
+            }
+        }else
+            if (level == 2) {
+                for (int i = 0; i < Matrix[0].length; i++) {
+                    for (int j = 0; j < Matrix.length; j++) {
+                        switch (Matrix[j][i]) {
+                            case '#':
+                                g.drawImage(platformSprites.get(0), i * 32, j * 32, null);
+                                break;
 
+                            case '(':
+                                g.drawImage(floorSprites.get(1), i * 32, j * 32, null);
+                                break;
+
+                            case ')':
+                                g.drawImage(floorSprites.get(2), i * 32, j * 32, null);
+                                break;
+
+                            case '=':
+                                g.drawImage(floorSprites.get(0), i * 32, j * 32, null);
+                                break;
+                            case ']':
+                                g.drawImage(floorSprites.get(3), i * 32, j * 32, null);
+                                break;
+
+                            case '+':
+                                g.drawImage(endPoint, i * 32, j * 32, null);
+                                break;
+
+                            case 'c':
+                                chestsXPositions.add(i * 32);
+                                chestsYPositions.add(j * 32);
+                                numOfChest++;
+                                break;
+                            
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        else{
+            if (level == 3) {
+                for (int i = 0; i < Matrix[0].length; i++) {
+                    for (int j = 0; j < Matrix.length; j++) {
+                        switch (Matrix[j][i]) {
+                            case '#':
+                                g.drawImage(platformSprites.get(0), i * 32, j * 32, null);
+                                break;
+
+                            case '(':
+                                g.drawImage(floorSprites.get(1), i * 32, j * 32, null);
+                                break;
+
+                            case ')':
+                                g.drawImage(floorSprites.get(2), i * 32, j * 32, null);
+                                break;
+
+                            case '=':
+                                g.drawImage(floorSprites.get(0), i * 32, j * 32, null);
+                                break;
+                            case ']':
+                                g.drawImage(floorSprites.get(3), i * 32, j * 32, null);
+                                break;
+
+                            case '+':
+                                g.drawImage(endPoint, i * 32, j * 32, null);
+                                break;
+
+                            case 'c':
+                                chestsXPositions.add(i * 32);
+                                chestsYPositions.add(j * 32);               
+                                numOfChest++;
+                                break;
+                            
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -104,15 +182,11 @@ public class LevelHandler {
         // não sejam somadas
         ChestHandler.setNumOfChests(numOfChest);
         numOfChest = 0;
-        
 
         if(chestsXPositions.size() != 0 ){
-
             ChestHandler.setAllChestsPositions(chestsXPositions, chestsYPositions);
             chestHandler.createAllChest();
             chestHandler.drawAllChests(g);
         }
-
     }
-
 }

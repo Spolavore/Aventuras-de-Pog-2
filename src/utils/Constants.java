@@ -33,6 +33,7 @@ public abstract class Constants {
     }
 
     public static class LevelDefaultAssets {
+
         public static String LEVEL_1_FLOOR = Sprites.GROUND_TILE;
         public static String LEVEL_1_LEFT_FLOOR_BORDER = "/tiles/left_grass_tile.png";
         public static String LEVEL_1_RIGHT_FLOOR_BORDER = "/tiles/right_grass_tile.png";
@@ -40,11 +41,17 @@ public abstract class Constants {
         public static String LEVEL_1_RIGHT_GRASS_BORDER = "/tiles/right_border_grass_tile.png";
         public static String LEVEL_1_LIMITOR = "/tiles/left_border.png";
         public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
-
         public static String LEVEL_1_STONE_PLATAFORM = "/tiles/block_stone.png";
+        
+        //public static String LEVEL_2_FLOOR =
+        //public static String LEVEL_2_LEFT_FLOOR_BORDER = 
+        //public static String LEVEL_2_RIGHT_FLOOR_BORDER = 
+
+        //public static String LEVEL_3_FLOOR = 
+        //public static String LEVEL_3_LEFT_FLOOR_BORDER = 
+        //public static String LEVEL_3_RIGHT_FLOOR_BORDER = 
 
         public static String END_POINT = "/tiles/Tile_95.png";
-
     }
 
     public static class BufferedImagesAssets{
@@ -59,23 +66,23 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "               (=                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "                ]                      ".toCharArray(),
-                "             ===]===                   ".toCharArray(),
-                "                                       ".toCharArray(),
-                "                                       ".toCharArray(),
-                "            c                          ".toCharArray(),
-                "          ===                          ".toCharArray(),
-                "                                       ".toCharArray(),
-                "     ==             c                + ".toCharArray(),
+                "                        c              ".toCharArray(),
+                "                       ===             ".toCharArray(),
+                "                        =              ".toCharArray(),
+                "                            ===        ".toCharArray(),
+                "                             =         ".toCharArray(),
+                "                                     + ".toCharArray(),
+                "                                 ======".toCharArray(),
+                "                                  =====".toCharArray(),
+                "                          ======   ====".toCharArray(),
+                "                           ====    ====".toCharArray(),
+                "                   =====    ==      ===".toCharArray(),
+                "                    ===             ===".toCharArray(),
+                "                                    ===".toCharArray(),
+                "            =====                    ==".toCharArray(),
+                "             ===                     ==".toCharArray(),
+                "      ====                            =".toCharArray(),
+                "    ======                            =".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 
@@ -84,22 +91,22 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "              =======                  ".toCharArray(),
-                "             =        =                ".toCharArray(),
-                "            =         =                ".toCharArray(),
-                "                      =                ".toCharArray(),
-                "                    =                  ".toCharArray(),
-                "                   =                   ".toCharArray(),
-                "                 =                     ".toCharArray(),
-                "               =                       ".toCharArray(),
-                "             =                         ".toCharArray(),
-                "             ==========                ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
+                "         c                  +          ".toCharArray(),
+                "        ====             =====         ".toCharArray(),
+                "                          ===          ".toCharArray(),
+                "           ==      ===     =           ".toCharArray(),
+                "                  =====                ".toCharArray(),
+                "   c        ====      ==               ".toCharArray(),
+                "   =                                   ".toCharArray(),
+                "       ===                             ".toCharArray(),
+                "                   =======             ".toCharArray(),
+                "                    =====              ".toCharArray(),
+                "            =====     =                ".toCharArray(),
+                "             ===                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "                                       ".toCharArray(),
-                "                                     + ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 
@@ -107,26 +114,29 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
+                "           +                           ".toCharArray(),
+                "          ======                       ".toCharArray(),
+                "           ====                        ".toCharArray(),
                 "                                       ".toCharArray(),
-                "              =======                  ".toCharArray(),
-                "             =        =                ".toCharArray(),
-                "            =         =                ".toCharArray(),
-                "                      =                ".toCharArray(),
-                "                =====                  ".toCharArray(),
-                "               =====                   ".toCharArray(),
-                "                    =                  ".toCharArray(),
-                "                     =                 ".toCharArray(),
-                "            =        =                 ".toCharArray(),
-                "             =       =                 ".toCharArray(),
-                "              =======                  ".toCharArray(),
-                "                                       ".toCharArray(),
-                "       ======                          ".toCharArray(),
-                "      =                                ".toCharArray(),
-                "     )                                 ".toCharArray(),
-                "    =                                + ".toCharArray(),
+                "                  =====                ".toCharArray(),
+                "             c     ===   ==            ".toCharArray(),
+                "           =====                       ".toCharArray(),
+                "            ===              ======== =".toCharArray(),
+                "                              ======= =".toCharArray(),
+                "                      =====    ====== =".toCharArray(),
+                "                       ===       ==== =".toCharArray(),
+                "                ====               c  =".toCharArray(),
+                "                 ==               =====".toCharArray(),
+                "           ===                      ===".toCharArray(),
+                "            =                        ==".toCharArray(),
+                "      ===                             =".toCharArray(),
+                "     ===                               ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
     }
 
 
 }
+
+// Distância Horizontal Máxima = 3 espaços
+// Distância Vertical Máxima = 5
