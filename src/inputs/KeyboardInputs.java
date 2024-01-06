@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import entities.Player;
 import levels.Level;
+import levels.LevelHandler;
 import main.Game;
 import main.GamePanel;
 import physics.Collisions;
@@ -118,17 +119,12 @@ public class KeyboardInputs implements KeyListener {
     public void keyPressed(KeyEvent e) {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
         String gameState = gamePanel.getGameState();
-
+        
         if (gameState == "Lose Screen") {
             switch (keyPressed) {
 
                 default:
-                    Level.goToLevel1();
-                    gamePanel.setGameState("In game");
-                    SoundHandler.playBGLoopingSound("sounds/background_music.wav");
-                    player.reset();
-                    gamePanel.changeBackgroundColor(null);
-
+                    gamePanel.resetToInitStatus();
                     break;
             }
 

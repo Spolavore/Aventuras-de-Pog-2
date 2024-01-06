@@ -75,7 +75,7 @@ public abstract class Constants {
                 "            c                          ".toCharArray(),
                 "          ===                          ".toCharArray(),
                 "                                       ".toCharArray(),
-                "     ==             c                + ".toCharArray(),
+                "     ==             c     +            ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 
@@ -97,9 +97,9 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "                                       ".toCharArray(),
-                "                                       ".toCharArray(),
-                "              c                      + ".toCharArray(),
+                "        =                              ".toCharArray(),
+                "      =                                ".toCharArray(),
+                "      =       c                      + ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 
@@ -123,7 +123,7 @@ public abstract class Constants {
                 "       ======                          ".toCharArray(),
                 "      =                                ".toCharArray(),
                 "     )                                 ".toCharArray(),
-                "    =                                + ".toCharArray(),
+                "    =                               +  ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
     }

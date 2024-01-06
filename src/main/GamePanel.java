@@ -9,12 +9,12 @@ import java.awt.Font;
 import entities.Player;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
-import levels.LevelHandler;
 import objects.Chest;
 import objects.ChestHandler;
 import physics.Collisions;
 import physics.Gravity;
 import screens.LoseScreen;
+import screens.VictoryScreen;
 import soundtrack.SoundHandler;
 import levels.Level;
 import utils.Constants.BufferedImagesAssets;
@@ -36,6 +36,8 @@ public class GamePanel extends JPanel {
     private Gravity gravity;
     private Color backgroundColor = Color.WHITE;
     private LoseScreen loseScreen;
+    private VictoryScreen victoryScreen;
+    private static boolean  playerWon = false;
     private String GameState;
     private static boolean changeLevel = false;
 
@@ -47,7 +49,7 @@ public class GamePanel extends JPanel {
         this.gravity = new Gravity(player);
         this.mouseInputs = new MouseInputs(this);
         this.loseScreen = new LoseScreen(this);
-
+        this.victoryScreen = new VictoryScreen(this);
 
         level.loadMapAssets();
         player.loadAnimations();
@@ -55,7 +57,7 @@ public class GamePanel extends JPanel {
         addMouseListener(mouseInputs);
         addKeyListener(new KeyboardInputs(this, this.player));
         addMouseMotionListener(mouseInputs);
-
+        resetToInitStatus();
       
     }
 
@@ -64,31 +66,32 @@ public class GamePanel extends JPanel {
             player.resetToInitialPosition();
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
+            
+        }        
+        if(!playerWon){
+
+            ChestHandler.updateChests();
+            player.update();
+            collisions.checkCollisions();
+            gravity.gravityForce();
         }
-
-        
-        
-
-        ChestHandler.updateChests();
-        player.update();
-        collisions.checkCollisions();
-        gravity.gravityForce();
 
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(player.getLifes() != 0){
-           
+        if(playerWon){
+            victoryScreen.draw(g, player.getScore());
+        }
+        else if(verifyIfPlayerLost()){
+            loseScreen.loadLoseScreen(g, player.getScore());
+            setGameState("Lose Screen");
+        } else{
             player.render(g);
             level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
             drawGameStatus(g);
-        } else{
-            loseScreen.loadLoseScreen(g, player.getScore());
-            setGameState("Lose Screen");
         }
-
-
+        
         setBackground(backgroundColor); // Define a cor de fundo inicial -> como ela muda conforme a tela (vitoria ou derrota)
                                         // devemos colocar ela dentro do gameLoop
 
@@ -172,5 +175,27 @@ public class GamePanel extends JPanel {
 
     public String getGameState(){
         return GameState;
+    }
+
+    public Level getGamePLevel(){
+        return this.level;
+    }
+
+    public void resetToInitStatus() {
+        setGameState("In game");
+        SoundHandler.playBGLoopingSound("sounds/background_music.wav");
+        player.reset();
+        level.resetToLevel1();
+        collisions = new Collisions(level.getMatrixMap(), player);
+        changeBackgroundColor(Color.WHITE);
+    }
+
+    private boolean verifyIfPlayerLost(){
+        return player.getLifes() == 0;
+    }
+
+    
+    public static void setPlayerWon(boolean bool){
+        playerWon = bool;
     }
 }

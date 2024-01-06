@@ -14,7 +14,7 @@ import levels.LevelHandler;
 public class Level {
     private static char[][] LevelMap;
     private LevelHandler levelHandler;
-    private static int currentLevel = 1;
+    public static int currentLevel = 1;
 
     public Level(Game game){
         LevelMap = LevelMatrix.Level1Map;
@@ -45,7 +45,10 @@ public class Level {
 
 
     public static void goNextLevel(){
-
+        if(currentLevel == 3 ){
+            currentLevel += 1;
+            GamePanel.setPlayerWon(true);
+        }
         if(currentLevel < 3){
             currentLevel += 1;
             ChestHandler.reset();
@@ -60,14 +63,14 @@ public class Level {
                 default:
                     break;
             }
-        GamePanel.changeLevel(true);
+            GamePanel.changeLevel(true);
         }
     }
 
 
-    public static void goToLevel1(){
-
+    public void resetToLevel1(){
         currentLevel = 1;
+        LevelMap = LevelMatrix.Level1Map;
         ChestHandler.reset();
     }
     public int getCurrentLevel(){
