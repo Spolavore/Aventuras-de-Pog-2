@@ -1,11 +1,13 @@
 package inputs;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import entities.Player;
 import levels.Level;
+import main.Game;
 import main.GamePanel;
 import physics.Collisions;
 import soundtrack.SoundHandler;
@@ -21,7 +23,7 @@ public class KeyboardInputs implements KeyListener {
     public KeyboardInputs(GamePanel gamePanel, Player player) {
         this.gamePanel = gamePanel;
         this.player = player;
-        
+
     }
 
     @Override
@@ -46,12 +48,11 @@ public class KeyboardInputs implements KeyListener {
         int indexOfDirection = -1;
         int direction;
 
-
         switch (keyReleased) {
             case 'W':
                 if (player.canMove()[0] || player.getDirection() == Directions.UP) {
                     direction = Directions.UP;
-                    
+
                     indexOfDirection = directionStack.indexOf(direction);
                 }
                 break;
@@ -116,73 +117,77 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
+        String gameState = gamePanel.getGameState();
 
-        switch (keyPressed) {
-            case 'A':
-                if (player.canMove()[1] &&  !player.isFalling()) {
-                    player.setDirection(Directions.LEFT);
-                    stackDirection(Directions.LEFT);
-                    player.setMoving(true);
-                    lastDirectionRegistred = Directions.LEFT;
-                    if(!player.isJumping() && !player.isFalling()){
-                         player.setTypeOfAnimation(2);
+        if (gameState == "Lose Screen") {
+            switch (keyPressed) {
+
+                default:
+                    Level.goToLevel1();
+                    gamePanel.setGameState("In game");
+                    SoundHandler.playBGLoopingSound("sounds/background_music.wav");
+                    player.reset();
+                    gamePanel.changeBackgroundColor(null);
+
+                    break;
+            }
+
+        } else {
+
+            switch (keyPressed) {
+                case 'A':
+                    if (player.canMove()[1] && !player.isFalling()) {
+                        player.setDirection(Directions.LEFT);
+                        stackDirection(Directions.LEFT);
+                        player.setMoving(true);
+                        lastDirectionRegistred = Directions.LEFT;
+                        if (!player.isJumping() && !player.isFalling()) {
+                            player.setTypeOfAnimation(2);
+                        }
+
                     }
-                   
 
-                }
+                    break;
 
-                break;
+                case 'D':
+                    if (player.canMove()[3] && !player.isFalling()) {
+                        player.setDirection(Directions.RIGHT);
+                        stackDirection(Directions.RIGHT);
+                        player.setMoving(true);
+                        lastDirectionRegistred = Directions.RIGHT;
+                        if (!player.isJumping() && !player.isFalling()) {
+                            player.setTypeOfAnimation(2);
 
-            // Descomentar caso queira possibilitar que o jogador ande para baixo
-            // case 'S':
-            // if (player.canMove()[2]) {
-            // player.setDirection(Directions.DOWN);
-            // player.setTypeOfAnimation(4);
-            // stackDirection(Directions.DOWN);
-            // player.setMoving(true);
-
-            // }
-            // break;
-
-            case 'D':
-                if (player.canMove()[3] && !player.isFalling()) {
-                    player.setDirection(Directions.RIGHT);
-                    stackDirection(Directions.RIGHT);
-                    player.setMoving(true);
-                    lastDirectionRegistred = Directions.RIGHT;
-                    if(!player.isJumping() && !player.isFalling()){
-                        player.setTypeOfAnimation(2);
-                        
+                        }
                     }
-                }
 
-                break;
-            
+                    break;
 
-            case 'E':
-                if(player.isInEndpoint()){
-                    Level.goNextLevel();
-                }
-                if(player.isInChest()){
-                    player.setIsTryingtoOpenChest(true);
-                }else {
-                    player.setIsTryingtoOpenChest(false);
-                }
-                break;
-            case ' ':
-                
-                if(!player.isFalling()){
-                    if(!player.isJumping()){
-
-                        SoundHandler.playSound("sounds/Retro Jump Classic.wav");
+                case 'E':
+                    if (player.isInEndpoint()) {
+                        Level.goNextLevel();
                     }
-                    player.setJumping(true);
-                }
-                
-                break;
-            default:
-                break;
+                    if (player.isInChest()) {
+                        player.setIsTryingtoOpenChest(true);
+                    } else {
+                        player.setIsTryingtoOpenChest(false);
+                    }
+                    break;
+                case ' ':
 
+                    if (!player.isFalling()) {
+                        if (!player.isJumping()) {
+
+                            SoundHandler.playSound("sounds/Retro Jump Classic.wav");
+                        }
+                        player.setJumping(true);
+                    }
+
+                    break;
+                default:
+                    break;
+
+            }
         }
 
     }
@@ -201,26 +206,24 @@ public class KeyboardInputs implements KeyListener {
         KeyboardInputs.directionStack.clear();
     }
 
-
-    public static int getLastDirection(){
-        if(directionStack.size() != 0){
+    public static int getLastDirection() {
+        if (directionStack.size() != 0) {
             int lastDirectionIndex = directionStack.size() - 1;
             return directionStack.get(lastDirectionIndex);
         } else {
             return 400; // erro
         }
     }
-    
+
     // A diferenção entre esse get e o getLastDirection é que este está guarando
     // em memória a última tecla processada, estão ela soltada ou não. Já
     // a getLastDirection retorta a última direção contida na pilha. (Caso o usuário
     // solte as teclas a pilha é limpada)
-    public static int getLastDirectionRegistred(){
+    public static int getLastDirectionRegistred() {
         return lastDirectionRegistred;
     }
 
-
-    public static int sizeDirectionStack(){
+    public static int sizeDirectionStack() {
         return directionStack.size();
     }
 }

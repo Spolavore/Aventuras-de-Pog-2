@@ -2,6 +2,7 @@ package levels;
 
 import main.Game;
 import main.GamePanel;
+import objects.Chest;
 import objects.ChestHandler;
 import utils.Constants.LevelDefaultAssets;
 import utils.Constants.LevelMatrix;
@@ -47,7 +48,7 @@ public class Level {
 
         if(currentLevel < 3){
             currentLevel += 1;
-            ChestHandler.setChestsOpened(0);
+            ChestHandler.reset();
             switch (currentLevel) {
                 case 2:
                     LevelMap = LevelMatrix.Level2Map;
@@ -63,6 +64,12 @@ public class Level {
         }
     }
 
+
+    public static void goToLevel1(){
+
+        currentLevel = 1;
+        ChestHandler.reset();
+    }
     public int getCurrentLevel(){
         return currentLevel;
     }

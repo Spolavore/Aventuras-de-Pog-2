@@ -78,7 +78,8 @@ public class Game implements Runnable {
     }
 
     private void startGameLoop(){
-        SoundHandler.playLoopingSound("sounds/background_music.wav");
+        SoundHandler.playBGLoopingSound("sounds/background_music.wav");
+        
         this.gameThread = new Thread(this);
         gameThread.start();
     }

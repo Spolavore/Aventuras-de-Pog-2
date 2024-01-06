@@ -6,15 +6,26 @@ import java.awt.Graphics;
 
 import main.GamePanel;
 import objects.ChestHandler;
+import soundtrack.SoundHandler;
 
 public class LoseScreen {
     private GamePanel gamePanel;
-
+    private boolean soundsIsPlaying = false;
     public LoseScreen(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+        
+        
     }
 
-    public void draw(Graphics g, int playerPoints) {
+
+    public void loadLoseScreen(Graphics g,  int playerPoints){
+        SoundHandler.stopBackgroundSound();
+        draw(g, playerPoints);
+        playLoseScreenSounds();
+    }
+
+
+    private void draw(Graphics g, int playerPoints) {
         gamePanel.changeBackgroundColor(Color.BLACK);
         Font fontText = new Font(Font.SANS_SERIF, Font.BOLD, 40);
 
@@ -25,7 +36,16 @@ public class LoseScreen {
         g.setFont(fontText);
         g.setColor(Color.WHITE);
         g.drawString("Score: " + playerPoints, 575, 300);
-
+        g.drawString("Press any button to restart game", 400 , 450);
         
+    }
+
+
+    private void playLoseScreenSounds(){
+        if(!soundsIsPlaying){
+                SoundHandler.playSound("sounds/som_derrota.wav");
+                soundsIsPlaying = true;
+            }
+
     }
 }

@@ -281,4 +281,11 @@ public class Player extends Entity {
     public void increaseScore(int score){
         this.score += score;
     }
+
+
+    public void reset(){
+        score = 0;
+        lifes = 3; 
+        setXY(playerInitialPosition[0], playerInitialPosition[1]);
+    }
 }

@@ -99,7 +99,7 @@ public abstract class Constants {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "                                     + ".toCharArray(),
+                "              c                      + ".toCharArray(),
                 "(=====================================)".toCharArray()
         };
 

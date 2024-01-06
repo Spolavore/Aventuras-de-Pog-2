@@ -52,7 +52,7 @@ public class LevelHandler {
     public void renderLevelMatrix(char[][] Matrix, Graphics g, int level) {
         // Matrix[0].length quantidade de colunas
         // Matrix.length quantidade de linhas
-        int numOfChest = 0;
+        int numOfChest = 0; // Número de baús em uma determinada fase
         ArrayList<Integer> chestsXPositions = new ArrayList<>();
         ArrayList<Integer> chestsYPositions = new ArrayList<>();
         ChestHandler chestHandler = new ChestHandler();
@@ -104,7 +104,7 @@ public class LevelHandler {
         // não sejam somadas
         ChestHandler.setNumOfChests(numOfChest);
         numOfChest = 0;
-        
+
 
         if(chestsXPositions.size() != 0 ){
 

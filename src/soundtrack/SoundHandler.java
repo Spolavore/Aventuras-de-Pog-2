@@ -2,6 +2,9 @@ package soundtrack;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -11,10 +14,14 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class SoundHandler {
+/*
+ * Classe responsável pelo controle de todos os sons do jogo
+ * 
+ */
+public abstract class SoundHandler {
     private static Clip clip;
     private static FloatControl volumeControl;
-
+    private static Clip backgroundSound;
     public static void playSound(String soundFilePath) {
         try {
             File soundFile = new File(soundFilePath);
@@ -23,14 +30,13 @@ public class SoundHandler {
             clip.open(audioInput);
             // Obter o controle de volume
             volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    public static void playLoopingSound(String soundFilePath) {
+    public static void playBGLoopingSound(String soundFilePath) {
 
         try {
 
@@ -48,20 +54,22 @@ public class SoundHandler {
                 public void update(LineEvent event) {
                     if (event.getType() == LineEvent.Type.STOP) {
                         event.getLine().close();
-                        playLoopingSound(soundFilePath);
+                        playBGLoopingSound(soundFilePath);
                     }
                 }
             });
 
+            backgroundSound = clip;
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    public static void stopSound() {
-        if (clip != null && clip.isRunning()) {
-            clip.stop();
+    public static void stopBackgroundSound() {
+        if (backgroundSound != null && backgroundSound.isRunning()) {
+            backgroundSound.stop();
         }
     }
+
 }

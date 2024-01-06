@@ -18,7 +18,7 @@ import screens.LoseScreen;
 import soundtrack.SoundHandler;
 import levels.Level;
 import utils.Constants.BufferedImagesAssets;
-
+import utils.Constants.GameDimentions;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,6 +35,8 @@ public class GamePanel extends JPanel {
     private Collisions collisions;
     private Gravity gravity;
     private Color backgroundColor = Color.WHITE;
+    private LoseScreen loseScreen;
+    private String GameState;
     private static boolean changeLevel = false;
 
     public GamePanel(Game game) {
@@ -44,6 +46,8 @@ public class GamePanel extends JPanel {
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
         this.mouseInputs = new MouseInputs(this);
+        this.loseScreen = new LoseScreen(this);
+
 
         level.loadMapAssets();
         player.loadAnimations();
@@ -61,7 +65,10 @@ public class GamePanel extends JPanel {
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
         }
+
         
+        
+
         ChestHandler.updateChests();
         player.update();
         collisions.checkCollisions();
@@ -71,13 +78,14 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(player.getLifes() == 0){
+        if(player.getLifes() != 0){
+           
             player.render(g);
             level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
             drawGameStatus(g);
         } else{
-            LoseScreen loseScreen = new LoseScreen(this);
-            loseScreen.draw(g, player.getScore());
+            loseScreen.loadLoseScreen(g, player.getScore());
+            setGameState("Lose Screen");
         }
 
 
@@ -155,5 +163,14 @@ public class GamePanel extends JPanel {
 
     public void changeBackgroundColor(Color color){
         this.backgroundColor = color;
+    }
+
+
+    public void setGameState(String gameState){
+        this.GameState = gameState;
+    }
+
+    public String getGameState(){
+        return GameState;
     }
 }
