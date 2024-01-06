@@ -74,4 +74,8 @@ public class ChestHandler {
             }
         }
     }
+    
+    public static void clearChestList(){
+        chestList.clear();
+    }
 }
