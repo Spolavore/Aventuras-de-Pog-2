@@ -119,10 +119,9 @@ public class KeyboardInputs implements KeyListener {
     public void keyPressed(KeyEvent e) {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
         String gameState = gamePanel.getGameState();
-        
-        if (gameState == "Lose Screen") {
-            switch (keyPressed) {
 
+        if (gameState == "Lose" || gameState == "Victory") {
+            switch (keyPressed) {
                 default:
                     gamePanel.resetToInitStatus();
                     break;

@@ -1,6 +1,5 @@
 package main;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -9,7 +8,6 @@ import java.awt.Font;
 import entities.Player;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
-import objects.Chest;
 import objects.ChestHandler;
 import physics.Collisions;
 import physics.Gravity;
@@ -18,12 +16,9 @@ import screens.VictoryScreen;
 import soundtrack.SoundHandler;
 import levels.Level;
 import utils.Constants.BufferedImagesAssets;
-import utils.Constants.GameDimentions;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 
 import static utils.Constants.GameDimentions;
 import static utils.Constants.LevelMatrix;
@@ -37,7 +32,7 @@ public class GamePanel extends JPanel {
     private Color backgroundColor = Color.WHITE;
     private LoseScreen loseScreen;
     private VictoryScreen victoryScreen;
-    private static boolean  playerWon = false;
+
     private String GameState;
     private static boolean changeLevel = false;
 
@@ -58,7 +53,7 @@ public class GamePanel extends JPanel {
         addKeyListener(new KeyboardInputs(this, this.player));
         addMouseMotionListener(mouseInputs);
         resetToInitStatus();
-      
+
     }
 
     public void updateGame() {
@@ -66,33 +61,37 @@ public class GamePanel extends JPanel {
             player.resetToInitialPosition();
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
-            
-        }        
-        if(!playerWon){
 
-            ChestHandler.updateChests();
-            player.update();
-            collisions.checkCollisions();
-            gravity.gravityForce();
         }
+
+        ChestHandler.updateChests();
+        player.update();
+        collisions.checkCollisions();
+        gravity.gravityForce();
 
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(playerWon){
+        if (verifyIfPlayerWon()) {
             victoryScreen.draw(g, player.getScore());
-        }
-        else if(verifyIfPlayerLost()){
+            victoryScreen.playVictorySounds();
+            setGameState("Victory");
+        } else if (verifyIfPlayerLost()) {
+
             loseScreen.loadLoseScreen(g, player.getScore());
-            setGameState("Lose Screen");
-        } else{
+            loseScreen.playLoseScreenSounds();
+
+            setGameState("Lose");
+        } else {
             player.render(g);
             level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
+
             drawGameStatus(g);
         }
-        
-        setBackground(backgroundColor); // Define a cor de fundo inicial -> como ela muda conforme a tela (vitoria ou derrota)
+
+        setBackground(backgroundColor); // Define a cor de fundo inicial -> como ela muda conforme a tela (vitoria ou
+                                        // derrota)
                                         // devemos colocar ela dentro do gameLoop
 
     }
@@ -159,43 +158,43 @@ public class GamePanel extends JPanel {
         g.drawString("Chests Found:", 440, 40);
         g.setFont(fontChests);
         g.setColor(Color.BLUE);
-        g.drawString(ChestHandler.getChestsOpened() + " of " + Integer.toString(ChestHandler.getChestsInLevel()), 634, 40);
-
+        g.drawString(ChestHandler.getChestsOpened() + " of " + Integer.toString(ChestHandler.getChestsInLevel()), 634,
+                40);
 
     }
 
-    public void changeBackgroundColor(Color color){
+    public void changeBackgroundColor(Color color) {
         this.backgroundColor = color;
     }
 
-
-    public void setGameState(String gameState){
+    public void setGameState(String gameState) {
         this.GameState = gameState;
     }
 
-    public String getGameState(){
+    public String getGameState() {
         return GameState;
     }
 
-    public Level getGamePLevel(){
+    public Level getGamePLevel() {
         return this.level;
     }
 
     public void resetToInitStatus() {
         setGameState("In game");
-        SoundHandler.playBGLoopingSound("sounds/background_music.wav");
+        // SoundHandler.playBGLoopingSound("sounds/background_music.wav");
         player.reset();
         level.resetToLevel1();
         collisions = new Collisions(level.getMatrixMap(), player);
         changeBackgroundColor(Color.WHITE);
+        loseScreen.setSoundIsPlaying(false);
+        victoryScreen.setSoundIsPlaying(false);
     }
 
-    private boolean verifyIfPlayerLost(){
+    private boolean verifyIfPlayerLost() {
         return player.getLifes() == 0;
     }
 
-    
-    public static void setPlayerWon(boolean bool){
-        playerWon = bool;
+    private boolean verifyIfPlayerWon() {
+        return level.getCurrentLevel() == 4;
     }
 }

@@ -47,7 +47,6 @@ public class Level {
     public static void goNextLevel(){
         if(currentLevel == 3 ){
             currentLevel += 1;
-            GamePanel.setPlayerWon(true);
         }
         if(currentLevel < 3){
             currentLevel += 1;
