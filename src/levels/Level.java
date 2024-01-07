@@ -43,7 +43,16 @@ public class Level {
         return LevelMap;
     }
 
-
+    /* Função chamada toda vez que o jogador
+     * clicar no endPoint, caso o level que ele
+     * esteja seja menor que 3 então ele vai para o próximo
+     * level, incrementando o currentLevel em 1
+     * 
+     * Caso o jogador esteja no level 4 e a função é chamada
+     * significa que ele venceu, então é incrementado  o current
+     * level mas a funçaõ GamePanel.changeLevel não é chamado, pois
+     * NÂO existe o mapa 4, logo gerará erro
+     */
     public static void goNextLevel(){
         if(currentLevel == 3 ){
             currentLevel += 1;

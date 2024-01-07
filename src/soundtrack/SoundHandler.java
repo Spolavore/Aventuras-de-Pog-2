@@ -18,10 +18,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * Classe responsável pelo controle de todos os sons do jogo
  * 
  */
-public abstract class SoundHandler {
+public class SoundHandler {
     private static Clip clip;
     private static FloatControl volumeControl;
-    private static Clip backgroundSound;
+    private static Clip backgroundSound = null;
     public static void playSound(String soundFilePath) {
         try {
             File soundFile = new File(soundFilePath);
@@ -36,7 +36,10 @@ public abstract class SoundHandler {
         }
     }
 
-    public static void playBGLoopingSound(String soundFilePath) {
+    public static void playBackgourndSound(){
+        playBGLoopingSound("sounds/background_music.wav");
+    }
+    private static void playBGLoopingSound(String soundFilePath) {
 
         try {
 
@@ -66,9 +69,11 @@ public abstract class SoundHandler {
         }
     }
 
+
     public static void stopBackgroundSound() {
-        if (backgroundSound != null && backgroundSound.isRunning()) {
+        if(backgroundSound != null && backgroundSound.isRunning()){
             backgroundSound.stop();
+            backgroundSound.close();
         }
     }
 

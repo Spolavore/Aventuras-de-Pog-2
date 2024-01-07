@@ -12,6 +12,9 @@ import utils.Constants.BufferedImagesAssets;
 import utils.Constants.LevelDefaultAssets;
 import utils.Constants.Sprites;
 
+/* Classe responsável pelo controle de ações
+ * de um level específico
+ */
 public class LevelHandler {
 
     private Game game;

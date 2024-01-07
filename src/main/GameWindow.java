@@ -6,17 +6,15 @@ import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
 
+// Arquivo de configuração da janela que abre ao roda o jogo
 public class GameWindow extends JFrame{
-    private int  windowWidth = 400;
-    private int windowHeight = 400;
+   
 
     public GameWindow(GamePanel gamePanel){
         JFrame jframe = new JFrame();
         jframe.setTitle("As Aventuras de Pog 2");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.add(gamePanel);
-       
-        // jframe.setLocationRelativeTo(null); // coloca o janela no centro da tela do usuário
         jframe.setResizable(false);
         jframe.pack();
         jframe.setVisible(true);

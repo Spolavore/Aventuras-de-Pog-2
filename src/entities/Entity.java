@@ -1,5 +1,10 @@
 package entities;
 
+
+// Classe de entidades que possui funções já implementadas para serem herdadas pelas calsses filhas.
+// Ela é abstract pois necessita que alguem a extenda, não havendo sentindo dela ser implementada
+
+// Métodos com assinaturas auto-explicativas, por isso não serão documentados
 public abstract class Entity {
     private int x,y;
     public Entity(int x, int y){

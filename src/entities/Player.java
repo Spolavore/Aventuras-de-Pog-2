@@ -1,10 +1,7 @@
 package entities;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import inputs.KeyboardInputs;
 import main.GamePanel;
@@ -12,12 +9,15 @@ import physics.Damage;
 import physics.Jump;
 import soundtrack.SoundHandler;
 import utils.AssetsHandler;
-import utils.Constants.BufferedImagesAssets;
+
 import utils.Constants.Directions;
 import utils.Constants.Sprites;
 
+/* Classe player, responsável por tudo relacionado ao jogador
+ * e algumas coisas que estão em contato com ele
+ */
 public class Player extends Entity {
-    private GamePanel gamePanel;
+
     private Damage damage;
     private int lifes;
     private int typeOfAnimation;
@@ -28,10 +28,10 @@ public class Player extends Entity {
     private boolean isInChest = false;
     private boolean isTryingtoOpenChest = false;
     private boolean isInEndpoint = false;
-    private BufferedImage img;
+    private BufferedImage img; // Imagem do jogador (encontrada em assets/player/char_blue.png)
     private Jump playerJump;
     private int score;
-    public static final int[] playerInitialPosition = { 0, 576 };
+    public static final int[] playerInitialPosition = { 0, 576 }; // Posição inicial do jogador em todas as fases
     private boolean[] canMove = { true, true, true, true }; // array que armazena as direções que o player pode se mover
                                                             // 0: W | 1: A | 2: S | 3: D
 
@@ -43,19 +43,20 @@ public class Player extends Entity {
     private BufferedImage[][] animations;
     private int playerAniTick, playerAniIndex, playerAniSpeed = 20;
 
-
     public Player(GamePanel g) {
         super(playerInitialPosition[0], playerInitialPosition[1]);
-        this.gamePanel = g;
         this.lifes = 3;
         this.score = 0;
         this.playerJump = new Jump(this); // Inicializa o jump permitindo que o player pule
-        this.damage = new Damage(this);
+        this.damage = new Damage(this); // Inicializa o dano fazendo com que o player seja capaz de
+                                        // tomar dano de queda
         loadAnimations();
     }
 
+    // Função chamada dentro do loop do game, dentro da Classe gamePanel
+    // Realiza todas as modificações que devem ser realizadas constantemente
+    // No Jogador
     public void update() {
-      
         updateAnimationTick();
         updatePosition();
         damage.applyDamage();
@@ -63,11 +64,15 @@ public class Player extends Entity {
 
     }
 
+    /*
+     * Função que renderiza a imagem do jogador na tela
+     */
     public void render(Graphics g) {
         g.drawImage(animations[typeOfAnimation][playerAniIndex], (int) getX(), (int) getY(), 64, 64, null);
     }
 
-    // 0 - 5
+    // Tipos de animações e seus respectivos índices:
+    // (OBS: nem todas as animações estão sendo usadas)
     // 0: parado
     // 1: atacando
     // 2: caminhando
@@ -126,19 +131,24 @@ public class Player extends Entity {
 
     }
 
+    // Função responsável pela mudança de movimentação do jogador
+    // com base nas teclas clicadas ou no estado atual do jogador
+    // se ele está caindo ou pulado por exemplo.
+    // x -> -1 o player anda pra esquerda | x -> +1 o player anda pra direita
+    // y -> +1 o player anda para baixo(cai) | y -> -1 player anda para cima (pula)
     public void updatePosition() {
         int playerDirection = this.getDirection();
 
         if (isJumping) {
             if (!playerJump.coolDownIsOn()) {
                 playerJump.jump();
-            } else {
-                System.err.println("Pulo não disponível");
             }
 
         }
         if (playerDirection == Directions.LEFT && canMove[1] && isMoving && !isFalling) {
             if (isJumping && !playerJump.coolDownIsOn()) {
+                // Pulo com movimentação permite que o jogador pule para um direção
+                // em específico
                 playerJump.jumpWithMovimentation(Directions.LEFT);
             } else {
 
@@ -159,6 +169,12 @@ public class Player extends Entity {
 
     }
 
+    /*
+     * Função reponsável por trocar a animação do jogador enquanto ele cai para
+     * quando ele não está caindo.
+     * Responsável, também, salvar a direção para a qual o player está pulando
+     * e setar a animação de acordo.
+     */
     private void changeAnimationAfterFalling() {
         if (!isFalling && !isJumping && KeyboardInputs.sizeDirectionStack() == 0) {
 
@@ -172,12 +188,14 @@ public class Player extends Entity {
         }
     }
 
-    public void resetToInitialPosition(){
-        this.setXY(playerInitialPosition[0],playerInitialPosition[1]);
-       
+
+    /* Funções abaixo são getters, setters e alguns resetadores de variáveis.
+     * Nomes auto-explicativos, por isso não serão documentadas.
+     */
+    public void resetToInitialPosition() {
+        this.setXY(playerInitialPosition[0], playerInitialPosition[1]);
+
     }
-
-
 
     public int getLifes() {
         return lifes;
@@ -224,19 +242,19 @@ public class Player extends Entity {
         return isJumping;
     }
 
-    public boolean isInChest(){
+    public boolean isInChest() {
         return isInChest;
     }
 
-    public void setIsInChest(boolean bool){
+    public void setIsInChest(boolean bool) {
         isInChest = bool;
     }
 
-    public boolean isTryingtoOpenChest(){
+    public boolean isTryingtoOpenChest() {
         return isTryingtoOpenChest;
     }
-    
-    public void setIsTryingtoOpenChest(boolean bool){
+
+    public void setIsTryingtoOpenChest(boolean bool) {
         this.isTryingtoOpenChest = bool;
 
     }
@@ -272,20 +290,18 @@ public class Player extends Entity {
     public int playerYPosition() {
         return this.getY();
     }
-    
 
     public int getScore() {
         return score;
     }
 
-    public void increaseScore(int score){
+    public void increaseScore(int score) {
         this.score += score;
     }
 
-
-    public void reset(){
+    public void reset() {
         score = 0;
-        lifes = 3; 
+        lifes = 3;
         setXY(playerInitialPosition[0], playerInitialPosition[1]);
     }
 }

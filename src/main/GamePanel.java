@@ -7,7 +7,6 @@ import java.awt.Font;
 
 import entities.Player;
 import inputs.KeyboardInputs;
-import inputs.MouseInputs;
 import objects.ChestHandler;
 import physics.Collisions;
 import physics.Gravity;
@@ -21,12 +20,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import static utils.Constants.GameDimentions;
-import static utils.Constants.LevelMatrix;
 
+/* Classe responsável por renderizar tudo na tela 
+ * para o usuário poder jogar, é a principal classe
+ * da aplicação
+ */
 public class GamePanel extends JPanel {
     private Player player;
     private Level level;
-    private MouseInputs mouseInputs;
     private Collisions collisions;
     private Gravity gravity;
     private Color backgroundColor = Color.WHITE;
@@ -39,51 +40,70 @@ public class GamePanel extends JPanel {
     public GamePanel(Game game) {
         // instanciação
         this.player = new Player(this); // posição inicial do player em determinada fase
-        this.level = new Level(game);
+        this.level = new Level(game); 
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
-        this.mouseInputs = new MouseInputs(this);
         this.loseScreen = new LoseScreen(this);
         this.victoryScreen = new VictoryScreen(this);
 
         level.loadMapAssets();
         player.loadAnimations();
         setPanelSize();
-        addMouseListener(mouseInputs);
         addKeyListener(new KeyboardInputs(this, this.player));
-        addMouseMotionListener(mouseInputs);
         resetToInitStatus();
 
     }
 
+
+    /* Realiza o update constante de váriaveis dentro do gameLoop */
     public void updateGame() {
+
+        // Se a variável changeLevel for true então o jogador passou de fase
+        // Logo deve-se resetar a sua posição tal como avisar a instancia
+        // collisions que a Matriz (MAPA) agora a ser verificada é outra.
         if (changeLevel) {
             player.resetToInitialPosition();
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
 
         }
-
+        
+        // Caso o jogador não tenha passado de fase então atualiza
+        // instancias que devem ser verificadas a todo instante
         ChestHandler.updateChests();
-        player.update();
-        collisions.checkCollisions();
-        gravity.gravityForce();
+        player.update(); // Status do jogador como animações, movimentação entre outros
+        collisions.checkCollisions(); // colisão -> se o jogador está colidindo com algo a cada vez que se move
+        gravity.gravityForce(); // aplicando a gravidade para garantir que o jogador caia sempre que não
+                                // estiver em cima de um bloco
 
     }
 
+
+    /* Função responsável por desenhar coisas na telas
+     * para que seja visível ao usuário
+    */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Se o usuário venceu desenha a tela de vitória
+        // e muda o estado do jogo para que o KeyboardInputs
+        // tenha uma ação diferente
         if (verifyIfPlayerWon()) {
             victoryScreen.draw(g, player.getScore());
             victoryScreen.playVictorySounds();
             setGameState("Victory");
+        
+
+        // Se o usuário perdeu desenha a tela de derrota
+        // e muda o estado do jogo.
         } else if (verifyIfPlayerLost()) {
 
             loseScreen.loadLoseScreen(g, player.getScore());
             loseScreen.playLoseScreenSounds();
 
             setGameState("Lose");
-        } else {
+        } 
+        // Caso contrário desenha o jogador, o level, e o status atual do jogo
+        else {
             player.render(g);
             level.draw(level.getMatrixMap(), g, level.getCurrentLevel());
 
@@ -120,7 +140,9 @@ public class GamePanel extends JPanel {
     public char[][] getNowMap() {
         return this.level.getMatrixMap();
     }
+    
 
+    // Seter para saber se o gamePanel deve mudar de level
     public static void changeLevel(boolean bool) {
         changeLevel = bool;
     }
@@ -155,10 +177,10 @@ public class GamePanel extends JPanel {
 
         g.setFont(fontText);
         g.setColor(Color.black);
-        g.drawString("Chests Found:", 440, 40);
+        g.drawString("Chests Found:", 480, 40);
         g.setFont(fontChests);
         g.setColor(Color.BLUE);
-        g.drawString(ChestHandler.getChestsOpened() + " of " + Integer.toString(ChestHandler.getChestsInLevel()), 634,
+        g.drawString(ChestHandler.getChestsOpened() + " of " + Integer.toString(ChestHandler.getChestsInLevel()), 670,
                 40);
 
     }
@@ -181,7 +203,7 @@ public class GamePanel extends JPanel {
 
     public void resetToInitStatus() {
         setGameState("In game");
-        // SoundHandler.playBGLoopingSound("sounds/background_music.wav");
+        SoundHandler.playBackgourndSound();
         player.reset();
         level.resetToLevel1();
         collisions = new Collisions(level.getMatrixMap(), player);

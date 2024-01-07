@@ -35,8 +35,6 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-        // verifica se todas as teclas foram soltadas;
-        // se sim então significa que o player está parado
         char keyReleased = Character.toUpperCase(e.getKeyChar());
 
         // O código abaixo segue a seguinte lógica:
@@ -82,8 +80,7 @@ public class KeyboardInputs implements KeyListener {
         }
 
         // Se a tecla entrar em algum dos casos do switch significa que o usuário soltou
-        // uma
-        // tecla de movimentação, se não o indice da direção continuára -1;
+        // uma tecla de movimentação, se não o indice da direção continuára -1;
         if (indexOfDirection != -1) {
 
             directionStack.remove(indexOfDirection); // remove da pilha a direção da tecla soltada.
@@ -115,11 +112,19 @@ public class KeyboardInputs implements KeyListener {
         }
     }
 
+     /* Função responsável pelo controle de qual tecla foi clicada
+      * e qual ação dentro do jogo deve ser tomada
+      */
     @Override
     public void keyPressed(KeyEvent e) {
         char keyPressed = Character.toUpperCase((e.getKeyChar()));
         String gameState = gamePanel.getGameState();
 
+
+        // Se o estados do jogo é Lose ou Victory, significa que o 
+        // jogador está ou na tela de derrota ou de vitória. Independente
+        // do caso, qualquer tecla q ele clicar o jogo deve ser resetado
+        // permitindo que o jogador jogue novamente
         if (gameState == "Lose" || gameState == "Victory") {
             switch (keyPressed) {
                 default:
@@ -129,6 +134,9 @@ public class KeyboardInputs implements KeyListener {
 
         } else {
 
+            // Caso o gameState for outro significa que o jogador está em jogo
+            // ou seja faz as verificações das teclas, colocando na pilha as teclas
+            // de movimentação
             switch (keyPressed) {
                 case 'A':
                     if (player.canMove()[1] && !player.isFalling()) {
@@ -137,7 +145,8 @@ public class KeyboardInputs implements KeyListener {
                         player.setMoving(true);
                         lastDirectionRegistred = Directions.LEFT;
                         if (!player.isJumping() && !player.isFalling()) {
-                            player.setTypeOfAnimation(2);
+                            player.setTypeOfAnimation(2); // permite a animação de corrida
+                                                                          // apenas se o jogador não está pulando ou caindo
                         }
 
                     }
@@ -159,9 +168,15 @@ public class KeyboardInputs implements KeyListener {
                     break;
 
                 case 'E':
+                    // Tecla E é uma tecla de interação que caso o jogador
+                    // esteja no endpoint e ele clicar E então ele deve prosseguir 
+                    // para a próxima fase
                     if (player.isInEndpoint()) {
                         Level.goNextLevel();
                     }
+                    // Caso ele esteja em cima de um baú e clique E ele está tentando abri-lo
+                    // então a flag abaixo é setada para true, caso contrário, false.
+                    // Essa flaga ajuda o ChestHandler a saber se o báu deve ser aberto ou não
                     if (player.isInChest()) {
                         player.setIsTryingtoOpenChest(true);
                     } else {
@@ -170,6 +185,8 @@ public class KeyboardInputs implements KeyListener {
                     break;
                 case ' ':
 
+
+                    // Tecla de ESPAÇO
                     if (!player.isFalling()) {
                         if (!player.isJumping()) {
 

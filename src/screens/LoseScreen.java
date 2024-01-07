@@ -19,7 +19,6 @@ public class LoseScreen {
 
     public void loadLoseScreen(Graphics g, int playerPoints) {
         draw(g, playerPoints);
-        SoundHandler.stopBackgroundSound();
 
     }
 
@@ -40,6 +39,7 @@ public class LoseScreen {
 
     public void playLoseScreenSounds() {
         if (!soundsIsPlaying) {
+            SoundHandler.stopBackgroundSound();
             SoundHandler.playSound("sounds/som_derrota.wav");
             soundsIsPlaying = true;
         }
