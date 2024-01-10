@@ -34,22 +34,15 @@ public abstract class Constants {
 
     public static class LevelDefaultAssets {
 
-        public static String LEVEL_1_FLOOR = Sprites.GROUND_TILE;
-        public static String LEVEL_1_LEFT_FLOOR_BORDER = "/tiles/left_grass_tile.png";
-        public static String LEVEL_1_RIGHT_FLOOR_BORDER = "/tiles/right_grass_tile.png";
-        public static String LEVEL_1_GRASS_BLOCK = "/tiles/grass_tile.png";
-        public static String LEVEL_1_RIGHT_GRASS_BORDER = "/tiles/right_border_grass_tile.png";
-        public static String LEVEL_1_LIMITOR = "/tiles/left_border.png";
-        public static String LEVEL_1_PLATAFORM = Sprites.PLATAFORM_STONE_TILE;
-        public static String LEVEL_1_STONE_PLATAFORM = "/tiles/block_stone.png";
-        
-        //public static String LEVEL_2_FLOOR =
-        //public static String LEVEL_2_LEFT_FLOOR_BORDER = 
-        //public static String LEVEL_2_RIGHT_FLOOR_BORDER = 
-
-        //public static String LEVEL_3_FLOOR = 
-        //public static String LEVEL_3_LEFT_FLOOR_BORDER = 
-        //public static String LEVEL_3_RIGHT_FLOOR_BORDER = 
+        public static String FLOOR = "/tiles/grass_tile.png";
+        public static String LOWER_FLOOR = "/tiles/Tile_24.png";
+        public static String LEFT_LOWER_FLOOR = "/tiles/Tile_69.png";
+        public static String RIGHT_LOWER_FLOOR = "/tiles/Tile_70.png";
+        public static String LEFT_FLOOR = "/tiles/left_grass_tile.png";
+        public static String RIGHT_FLOOR = "/tiles/right_grass_tile.png";
+        public static String PLATAFORM_MIDDLE = "/tiles/Tile_07.png";
+        public static String PLATAFORM_LEFT = "/tiles/Tile_06.png";
+        public static String PLATAFORM_RIGHT = "/tiles/Tile_08.png";
 
         public static String END_POINT = "/tiles/Tile_95.png";
     }
@@ -65,73 +58,73 @@ public abstract class Constants {
         public static final char[][] Level1Map = {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
+                "                                     c ".toCharArray(),
+                "                                     <_".toCharArray(),
                 "                                       ".toCharArray(),
-                "                        c              ".toCharArray(),
-                "                       ===             ".toCharArray(),
-                "                        =              ".toCharArray(),
-                "                            ===        ".toCharArray(),
-                "                             =         ".toCharArray(),
-                "                                     + ".toCharArray(),
-                "                                 ======".toCharArray(),
-                "                                  =====".toCharArray(),
-                "                          ======   ====".toCharArray(),
-                "                           ====    ====".toCharArray(),
-                "                   =====    ==      ===".toCharArray(),
-                "                    ===             ===".toCharArray(),
-                "                                    ===".toCharArray(),
-                "            =====                    ==".toCharArray(),
-                "             ===                     ==".toCharArray(),
-                "      ====                            =".toCharArray(),
-                "    ======                            =".toCharArray(),
-                "(=====================================)".toCharArray()
-        };
+                "                                       ".toCharArray(),
+                "                                 <>    ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                              +        ".toCharArray(),
+                "                            (===)      ".toCharArray(),
+                "                            [---]      ".toCharArray(),
+                "                      (==)             ".toCharArray(),
+                "                      [--]             ".toCharArray(),
+                "                (==)                   ".toCharArray(),
+                "                [--]                   ".toCharArray(),
+                "                                       ".toCharArray(),
+                "          (==)                         ".toCharArray(),
+                "          [--]                         ".toCharArray(),
+                "     <_>                               ".toCharArray(),
+                "                                       ".toCharArray(),
+                "=======================================".toCharArray()
+        };      /////////////////////////////////////////
 
         public static final char[][] Level2Map = {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
+                "                              +        ".toCharArray(),
+                "                            <___>      ".toCharArray(),
+                "         c                             ".toCharArray(),
+                "        <__>           <_>             ".toCharArray(),
+                "                                       ".toCharArray(),
+                "             <>   <=>                  ".toCharArray(),
+                "                                       ".toCharArray(),
+                " c                                     ".toCharArray(),
+                "<>                     <>              ".toCharArray(),
+                "                                       ".toCharArray(),
+                "    <>                                 ".toCharArray(),
+                "        <_>         <_>                ".toCharArray(),
+                "                                       ".toCharArray(),
+                "             (===)                     ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "         c                  +          ".toCharArray(),
-                "        ====             =====         ".toCharArray(),
-                "                          ===          ".toCharArray(),
-                "           ==      ===     =           ".toCharArray(),
-                "                  =====                ".toCharArray(),
-                "   c        ====      ==               ".toCharArray(),
-                "   =                                   ".toCharArray(),
-                "       ===                             ".toCharArray(),
-                "                   =======             ".toCharArray(),
-                "                    =====              ".toCharArray(),
-                "            =====     =                ".toCharArray(),
-                "             ===                       ".toCharArray(),
-                "                                       ".toCharArray(),
-                "                                       ".toCharArray(),
-                "(=====================================)".toCharArray()
+                "=======================================".toCharArray()
         };
 
          public static final char[][] Level3Map = {
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
                 "                                       ".toCharArray(),
-                "           +                           ".toCharArray(),
-                "          ======                       ".toCharArray(),
-                "           ====                        ".toCharArray(),
+                "            +                          ".toCharArray(),
+                "           (==)                        ".toCharArray(),
+                "           [--]                        ".toCharArray(),
                 "                                       ".toCharArray(),
-                "                  =====                ".toCharArray(),
-                "             c     ===   ==            ".toCharArray(),
-                "           =====                       ".toCharArray(),
-                "            ===              ======== =".toCharArray(),
-                "                              ======= =".toCharArray(),
-                "                      =====    ====== =".toCharArray(),
-                "                       ===       ==== =".toCharArray(),
-                "                ====               c  =".toCharArray(),
-                "                 ==               =====".toCharArray(),
-                "           ===                      ===".toCharArray(),
-                "            =                        ==".toCharArray(),
-                "      ===                             =".toCharArray(),
-                "     ===                               ".toCharArray(),
-                "(=====================================)".toCharArray()
+                "       <>         <___>                ".toCharArray(),
+                "             c           <>            ".toCharArray(),
+                "           (===)                       ".toCharArray(),
+                "           [---]             <___>     ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                       <__>            ".toCharArray(),
+                "                                       ".toCharArray(),
+                "                <___>               c  ".toCharArray(),
+                "                                  (====".toCharArray(),
+                "           <_>                    [----".toCharArray(),
+                "                                       ".toCharArray(),
+                "      <_>                              ".toCharArray(),
+                "                                       ".toCharArray(),
+                "=======================================".toCharArray()
         };
     }
 

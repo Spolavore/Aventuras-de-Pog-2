@@ -29,9 +29,17 @@ public class Level {
 
     public void loadMapAssets(){
         if(currentLevel == 1 || currentLevel == 2){
-            String floorAssets[] = {LevelDefaultAssets.LEVEL_1_GRASS_BLOCK, LevelDefaultAssets.LEVEL_1_LEFT_FLOOR_BORDER,
-            LevelDefaultAssets.LEVEL_1_RIGHT_FLOOR_BORDER,LevelDefaultAssets.LEVEL_1_RIGHT_GRASS_BORDER} ;
-            String plataformsAssets[] ={LevelDefaultAssets.LEVEL_1_PLATAFORM};
+            String floorAssets[] = {LevelDefaultAssets.FLOOR,
+                                    LevelDefaultAssets.LOWER_FLOOR,
+                                    LevelDefaultAssets.LEFT_LOWER_FLOOR,
+                                    LevelDefaultAssets.RIGHT_LOWER_FLOOR,
+                                    LevelDefaultAssets.LEFT_FLOOR,
+                                    LevelDefaultAssets.RIGHT_FLOOR,
+                                    LevelDefaultAssets.PLATAFORM_MIDDLE,
+                                    LevelDefaultAssets.PLATAFORM_LEFT,
+                                    LevelDefaultAssets.PLATAFORM_RIGHT,
+                                    };
+            String plataformsAssets[] ={};
             String Limitor[] ={ };
             this.levelHandler.importLevelSprites(floorAssets, plataformsAssets, Limitor);
         }
