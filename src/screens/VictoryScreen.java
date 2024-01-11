@@ -26,15 +26,15 @@ public class VictoryScreen {
         g.setColor(Color.YELLOW);
         fontText = new Font(Font.SANS_SERIF, Font.BOLD, 25);
         g.setFont(fontText);
-        g.drawString("Score: " + playerPoints, 540, 230);
+        g.drawString("Score: " + playerPoints, 537, 230);
         g.drawImage(AssetsHandler.LoadAssets("/win/dennis.png"), 490, 270, null);
 
         g.setColor(Color.WHITE);
-        g.drawString("Teacher Dennis is proud of you! :)", 385, 500);
+        g.drawString("Teacher Dennis is proud of you! :)", 390, 500);
         g.setColor(Color.yellow);
         fontText = new Font(Font.SANS_SERIF, Font.BOLD, 18);
         g.setFont(fontText);
-        g.drawString("Press any button to restart game", 438, 550);
+        g.drawString("Press any button to restart game", 441, 550);
         g.setColor(Color.yellow);
     }
 

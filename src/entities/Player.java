@@ -61,7 +61,6 @@ public class Player extends Entity {
         updatePosition();
         damage.applyDamage();
         changeAnimationAfterFalling();
-
     }
 
     /*

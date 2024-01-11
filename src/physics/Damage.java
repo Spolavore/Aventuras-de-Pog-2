@@ -4,36 +4,42 @@ import entities.Player;
 
 public class Damage {
     private Player player;
-    private  int blocksFell;
+    private int blocksFell;
     private int lastBlockChecked;
-    public Damage(Player player){
+    private boolean shouldApply = false;
+
+    public Damage(Player player) {
         this.player = player;
 
     }
 
-    public void applyDamage(){
-        verifyBlocksFelt();
+    public void applyDamage() {
        
-        if(blocksFell >= 9){
+        verifyBlocksFelt();
+        if (blocksFell >= 9) {
+            shouldApply = true;
+        }
+        // Faz com que o player só tome dano ao tocar no solo
+        if (shouldApply && !player.isFalling()) {
             player.decreaseLife();
             blocksFell = 0;
+            shouldApply = false;
         }
-   
+
     }
-  
+
     private void verifyBlocksFelt() {
-        if (player.isFalling()){
-            
+        if (player.isFalling()) {
+
             int yPosition = player.getY();
             int currentBlock = yPosition / 32;
-            
 
-            if(currentBlock != lastBlockChecked){
+            if (currentBlock != lastBlockChecked) {
                 this.lastBlockChecked = currentBlock;
                 blocksFell += 1;
-                
+
             }
-           
+
         } else {
             blocksFell = 0;
             lastBlockChecked = -1;

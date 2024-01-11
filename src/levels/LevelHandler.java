@@ -63,40 +63,55 @@ public class LevelHandler {
             for (int i = 0; i < Matrix[0].length; i++) {
                 for (int j = 0; j < Matrix.length; j++) {
                     switch (Matrix[j][i]) {
-                        case '#':
-                            g.drawImage(platformSprites.get(0), i * 32, j * 32, null);
-                            break;
-
-                        case '(':
-                            g.drawImage(floorSprites.get(1), i * 32, j * 32, null);
-                            break;
-
-                        case ')':
-                            g.drawImage(floorSprites.get(2), i * 32, j * 32, null);
-                            break;
-
                         case '=':
                             g.drawImage(floorSprites.get(0), i * 32, j * 32, null);
                             break;
+
+                        case '-':
+                            g.drawImage(floorSprites.get(1), i * 32, j * 32, null);
+                            break;    
+                            
+                        case '[':
+                            g.drawImage(floorSprites.get(2), i * 32, j * 32, null);
+                            break;  
+
                         case ']':
                             g.drawImage(floorSprites.get(3), i * 32, j * 32, null);
+                            break;  
+                            
+                        case '(':
+                            g.drawImage(floorSprites.get(4), i * 32, j * 32, null);
+                            break;
+
+                        case ')':
+                            g.drawImage(floorSprites.get(5), i * 32, j * 32, null);
+                            break;
+                        
+                        case '_':
+                            g.drawImage(floorSprites.get(6), i * 32, j * 32, null);
+                            break;
+
+                        case '<':
+                            g.drawImage(floorSprites.get(7), i * 32, j * 32, null);
+                            break;
+
+                        case '>':
+                            g.drawImage(floorSprites.get(8), i * 32, j * 32, null);
                             break;
 
                         case '+':
                             g.drawImage(endPoint, i * 32, j * 32, null);
                             break;
+                            
                         case 'c':
                             chestsXPositions.add(i * 32);
-                            chestsYPositions.add(j * 32);
-                           
+                            chestsYPositions.add(j * 32);                           
                             numOfChest++;
                             break;
                         
                         default:
                             break;
-
                     }
-
                 }
             }
         }

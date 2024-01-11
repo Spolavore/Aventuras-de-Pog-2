@@ -38,10 +38,10 @@ public class Collisions {
         // x é a coluna y a linha, Matrix que possui as tranformação das coordenadas de
         // tela para as coordenadas da matrix do mapa
         int[] playerMatrixPosition = { playerXPosition / 32, playerYPosition / 32 }; // 32 x 32 é o tamanho do tile;
-        
-        
-        // System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " + playerMatrixPosition[1]);
-        
+
+        System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " +
+                playerMatrixPosition[1]);
+
         // ** Abaixo estão as verificações de se o usuário pode ou não se movimentar
         // para uma das 4 direções **/
 
@@ -50,25 +50,25 @@ public class Collisions {
 
             checkIfPlayerIsFalling(playerMatrixPosition);
 
-            if(checkIfPlayerInEndpoint(playerMatrixPosition, 0, 0)){
+            if (checkIfPlayerInEndpoint(playerMatrixPosition, 0, 0)) {
                 player.setIsInEndpoint(true);
-            } else{
+            } else {
                 player.setIsInEndpoint(false);
             }
 
-            if(checkIfPlayerInChest(playerMatrixPosition, 0, 0)){
+            if (checkIfPlayerInChest(playerMatrixPosition, 0, 0)) {
                 player.setIsInChest(true);
-                if(player.isTryingtoOpenChest()){
+                if (player.isTryingtoOpenChest()) {
                     ChestHandler.openChestCallBack(player);
                 }
-            } else{
+            } else {
                 player.setIsInChest(false);
             }
 
             // Verificação se o player pode se mover para cima
-            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] != ' ' 
-            && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, -1)
-            && !checkIfPlayerInChest(playerMatrixPosition, 0, -1)) {
+            if (this.Map[playerMatrixPosition[1] - 1][playerMatrixPosition[0]] != ' '
+                    && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, -1)) {
+
                 player.setPlayerCanMove(false, 0);
 
             } else {
@@ -76,9 +76,9 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para a esquerda
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] != ' ' 
-            && !checkIfPlayerInEndpoint(playerMatrixPosition, -1, 0)
-            && !checkIfPlayerInChest(playerMatrixPosition, -1, 0)) {
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] - 1] != ' '
+                    && !checkIfPlayerInEndpoint(playerMatrixPosition, -1, 0)
+                    && !checkIfPlayerInChest(playerMatrixPosition, -1, 0)) {
                 player.setPlayerCanMove(false, 1);
 
             } else {
@@ -87,9 +87,9 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para baixo
-            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] != ' ' 
-            && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1)
-            && !checkIfPlayerInChest(playerMatrixPosition, 0, 1)) {
+            if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] != ' '
+                    && !checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1)
+                    && !checkIfPlayerInChest(playerMatrixPosition, 0, 1)) {
                 player.setPlayerCanMove(false, 2);
 
             } else {
@@ -97,14 +97,13 @@ public class Collisions {
             }
 
             // Verificação se o player pode se mover para a direita
-            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] != ' ' 
-            && !checkIfPlayerInEndpoint(playerMatrixPosition, 1, 0)
-            && !checkIfPlayerInChest(playerMatrixPosition,1,0)) {
+            if (this.Map[playerMatrixPosition[1]][playerMatrixPosition[0] + 1] != ' '
+                    && !checkIfPlayerInEndpoint(playerMatrixPosition, 1, 0)
+                    && !checkIfPlayerInChest(playerMatrixPosition, 1, 0)) {
                 player.setPlayerCanMove(false, 3);
             } else {
                 player.setPlayerCanMove(true, 3);
             }
-
 
             boolean isRightDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] + 1] == ' ';
             boolean isLeftDiagonalEmpty = this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0] - 1] == ' ';
@@ -137,21 +136,34 @@ public class Collisions {
     // as direções. Se nenhum dos testes passarem a função retorna true
     // e as demais verificações de colisão da função checkColisions são executadas
     private boolean checkBoardLimits(int[] playerMatrixPosition) {
-        checkIfPlayerIsFalling(playerMatrixPosition);
+        // Primeiro partimos assumindo que o jogador pode se mover para todos os lados
+        player.setPlayerCanMove(true, 0);
+        player.setPlayerCanMove(true, 1);
+        player.setPlayerCanMove(true, 2);
+        player.setPlayerCanMove(true, 3);
+        checkIfPlayerIsFalling(playerMatrixPosition); // temos que chegar se o player esta caindo
+                                                      // para impedir pulos
         if (playerMatrixPosition[0] == 0 && playerMatrixPosition[1] == 0) {
+            // impede que o player ande pra esquerda/cima
             player.setPlayerCanMove(false, 1);
             player.setPlayerCanMove(false, 0);
+
             return false;
         } else if (playerMatrixPosition[0] == 38 && playerMatrixPosition[1] == 0) {
+            // impede que o player ande pra direita/cima
             player.setPlayerCanMove(false, 3);
-            player.setPlayerCanMove(false, 3);
+            player.setPlayerCanMove(false, 0);
+            return false;
         } else if (playerMatrixPosition[0] == 0) {
+            // impede que player ande pra esquerda
             player.setPlayerCanMove(false, 1);
             return false;
         } else if (playerMatrixPosition[0] == 38) {
+            // impede que player ande pra direita
             player.setPlayerCanMove(false, 3);
             return false;
         } else if (playerMatrixPosition[1] == 0) {
+            // impede que player ande pra cima
             player.setPlayerCanMove(false, 0);
             return false;
         }
@@ -159,10 +171,10 @@ public class Collisions {
 
     }
 
-    private void checkIfPlayerIsFalling(int[] playerMatrixPosition){
-        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' ' 
-        || checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1) 
-        || checkIfPlayerInChest(playerMatrixPosition, 0, 1)) {
+    private void checkIfPlayerIsFalling(int[] playerMatrixPosition) {
+        if (this.Map[playerMatrixPosition[1] + 1][playerMatrixPosition[0]] == ' '
+                || checkIfPlayerInEndpoint(playerMatrixPosition, 0, 1)
+                || checkIfPlayerInChest(playerMatrixPosition, 0, 1)) {
             if (!player.isJumping()) {
                 player.setFalling(true);
                 player.setTypeOfAnimation(4);
@@ -207,27 +219,29 @@ public class Collisions {
             if (playerIsInLeftBorder) {
                 hitboxX = 35;
 
-            } else if (playerXConverted != 1) {
+            }
+
+            else if (playerXConverted != 1) {
                 hitboxX = 16;
             }
 
         }
     }
 
+    private boolean checkIfPlayerInChest(int[] playerMatrixPosition, int xAcres, int yAcres) {
 
-    private boolean checkIfPlayerInChest(int[] playerMatrixPosition, int xAcres, int yAcres){
-        
         return this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == 'c' ||
-        this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == 'C';
+                this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == 'C';
 
     }
-    // Função auxiliar para o método check colissions para saber se o player está em cima do endpoint
-    private boolean checkIfPlayerInEndpoint(int[] playerMatrixPosition, int xAcres, int yAcres ){
+
+    // Função auxiliar para o método check colissions para saber se o player está em
+    // cima do endpoint
+    private boolean checkIfPlayerInEndpoint(int[] playerMatrixPosition, int xAcres, int yAcres) {
         return this.Map[playerMatrixPosition[1] + yAcres][playerMatrixPosition[0] + xAcres] == '+';
     }
 
-    public void updateLevelToCheck(char[][] newMap){
+    public void updateLevelToCheck(char[][] newMap) {
         this.Map = newMap;
     }
 }
-
