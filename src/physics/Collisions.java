@@ -39,8 +39,8 @@ public class Collisions {
         // tela para as coordenadas da matrix do mapa
         int[] playerMatrixPosition = { playerXPosition / 32, playerYPosition / 32 }; // 32 x 32 é o tamanho do tile;
 
-        System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " +
-                playerMatrixPosition[1]);
+        //System.out.println("X: " + playerMatrixPosition[0] + '|' + "Y: " +
+         //       playerMatrixPosition[1]);
 
         // ** Abaixo estão as verificações de se o usuário pode ou não se movimentar
         // para uma das 4 direções **/
