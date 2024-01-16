@@ -86,5 +86,13 @@ public class Game implements Runnable {
         this.gameThread = new Thread(this);
         gameThread.start();
     }
+
+    public GameWindow getGameWindow() {
+        return gameWindow;
+    }
+
+    public Thread getGameThread() {
+        return gameThread;
+    }
     
 }

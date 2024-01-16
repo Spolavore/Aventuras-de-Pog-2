@@ -303,4 +303,16 @@ public class Player extends Entity {
         lifes = 3;
         setXY(playerInitialPosition[0], playerInitialPosition[1]);
     }
+
+    public void setLifes(int vida){
+        lifes=vida;
+    }
+
+    public void setScores(int valor){
+        score=valor;
+    }
+
+    public void setPosition(int x, int y) {
+        super.setXY(x, y);
+    }
 }

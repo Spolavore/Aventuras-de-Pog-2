@@ -114,4 +114,16 @@ public class Chest {
     public boolean isOpened() {
         return isOpened;
     }
+
+    public int getChestAniIndex() {
+        return chestAniIndex;
+    }
+
+    public int getChestAniTick() {
+        return chestAniTick;
+    }
+
+    public String getTypeOfAnimation() {
+        return typeOfAnimation;
+    }
 }
