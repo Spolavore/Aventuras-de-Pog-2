@@ -1,12 +1,10 @@
 package physics;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import entities.Player;
 import inputs.KeyboardInputs;
-import utils.Constants.Directions;
 
 public class Jump {
     private Player player;

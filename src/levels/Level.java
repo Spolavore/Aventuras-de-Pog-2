@@ -2,14 +2,11 @@ package levels;
 
 import main.Game;
 import main.GamePanel;
-import objects.Chest;
 import objects.ChestHandler;
 import utils.Constants.LevelDefaultAssets;
 import utils.Constants.LevelMatrix;
 
 import java.awt.Graphics;
-
-import levels.LevelHandler;
 
 public class Level {
     private static char[][] LevelMap;

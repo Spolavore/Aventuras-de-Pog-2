@@ -1,8 +1,6 @@
 package physics;
 
 import entities.Player;
-import inputs.KeyboardInputs;
-import utils.Constants.Directions;
 
 public class Gravity {
     private Player player;

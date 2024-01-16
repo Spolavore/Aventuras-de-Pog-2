@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import main.GamePanel;
-import objects.ChestHandler;
 import soundtrack.SoundHandler;
 
 public class LoseScreen {

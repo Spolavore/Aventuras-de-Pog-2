@@ -1,19 +1,14 @@
 package inputs;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import entities.Player;
 import levels.Level;
-import levels.LevelHandler;
-import main.Game;
 import main.GamePanel;
-import physics.Collisions;
 import soundtrack.SoundHandler;
 import utils.Constants.Directions;
-import utils.Constants.Directions.*;
 
 public class KeyboardInputs implements KeyListener {
     private GamePanel gamePanel;

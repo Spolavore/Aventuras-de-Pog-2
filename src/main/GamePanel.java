@@ -15,7 +15,6 @@ import screens.VictoryScreen;
 import soundtrack.SoundHandler;
 import levels.Level;
 import utils.Constants.BufferedImagesAssets;
-import utils.Constants.GameDimentions;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -5,12 +5,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import main.Game;
-import objects.Chest;
 import objects.ChestHandler;
 import utils.AssetsHandler;
-import utils.Constants.BufferedImagesAssets;
 import utils.Constants.LevelDefaultAssets;
-import utils.Constants.Sprites;
 
 /* Classe responsável pelo controle de ações
  * de um level específico

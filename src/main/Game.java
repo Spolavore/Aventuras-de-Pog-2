@@ -1,7 +1,5 @@
 package main;
 
-import soundtrack.SoundHandler;
-
 /* Classe responsável pela configuração do ambiente
  * como setar o FPS, setar o UPS entre outras coisas
  * -> Recomendo não mexer aqui pois é um arquivo apenas

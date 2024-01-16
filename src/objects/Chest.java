@@ -2,10 +2,6 @@ package objects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import entities.Entity;
-import entities.Player;
 import utils.Constants.BufferedImagesAssets;
 
 public class Chest {
