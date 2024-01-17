@@ -45,8 +45,6 @@ public class Player extends Entity {
 
     public Player(GamePanel g) {
         super(playerInitialPosition[0], playerInitialPosition[1]);
-        this.lifes = 3;
-        this.score = 0;
         this.playerJump = new Jump(this); // Inicializa o jump permitindo que o player pule
         this.damage = new Damage(this); // Inicializa o dano fazendo com que o player seja capaz de
                                         // tomar dano de queda

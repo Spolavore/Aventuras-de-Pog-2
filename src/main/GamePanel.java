@@ -40,7 +40,7 @@ public class GamePanel extends JPanel {
     public GamePanel(Game game) {
         // instanciação
         this.player = new Player(this); // posição inicial do player em determinada fase
-        this.level = new Level(game); 
+        this.level = new Level(game);
         this.collisions = new Collisions(getNowMap(), player);
         this.gravity = new Gravity(player);
         this.loseScreen = new LoseScreen(this);
@@ -54,7 +54,6 @@ public class GamePanel extends JPanel {
 
     }
 
-
     /* Realiza o update constante de váriaveis dentro do gameLoop */
     public void updateGame() {
 
@@ -66,8 +65,9 @@ public class GamePanel extends JPanel {
             collisions.updateLevelToCheck(level.getMatrixMap());
             changeLevel = false;
 
-        }
-        
+        }   
+
+
         // Caso o jogador não tenha passado de fase então atualiza
         // instancias que devem ser verificadas a todo instante
         ChestHandler.updateChests();
@@ -78,10 +78,10 @@ public class GamePanel extends JPanel {
 
     }
 
-
-    /* Função responsável por desenhar coisas na telas
+    /*
+     * Função responsável por desenhar coisas na telas
      * para que seja visível ao usuário
-    */
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Se o usuário venceu desenha a tela de vitória
@@ -89,19 +89,22 @@ public class GamePanel extends JPanel {
         // tenha uma ação diferente
         if (verifyIfPlayerWon()) {
             victoryScreen.draw(g, player.getScore());
+            SoundHandler.enableToPlayBGSound(false);
+            SoundHandler.stopBackgroundSound();
             victoryScreen.playVictorySounds();
             setGameState("Victory");
-        
 
-        // Se o usuário perdeu desenha a tela de derrota
-        // e muda o estado do jogo.
+            // Se o usuário perdeu desenha a tela de derrota
+            // e muda o estado do jogo.
         } else if (verifyIfPlayerLost()) {
 
             loseScreen.loadLoseScreen(g, player.getScore());
+            SoundHandler.enableToPlayBGSound(false);
+            SoundHandler.stopBackgroundSound();
             loseScreen.playLoseScreenSounds();
 
             setGameState("Lose");
-        } 
+        }
         // Caso contrário desenha o jogador, o level, e o status atual do jogo
         else {
             player.render(g);
@@ -140,7 +143,6 @@ public class GamePanel extends JPanel {
     public char[][] getNowMap() {
         return this.level.getMatrixMap();
     }
-    
 
     // Seter para saber se o gamePanel deve mudar de level
     public static void changeLevel(boolean bool) {
@@ -203,6 +205,7 @@ public class GamePanel extends JPanel {
 
     public void resetToInitStatus() {
         setGameState("In game");
+        SoundHandler.enableToPlayBGSound(true);
         SoundHandler.playBackgourndSound();
         player.reset();
         level.resetToLevel1();
@@ -219,6 +222,7 @@ public class GamePanel extends JPanel {
     private boolean verifyIfPlayerWon() {
         return level.getCurrentLevel() == 4;
     }
+
     public Player getPlayer() {
         return player;
     }

@@ -17,25 +17,28 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * 
  */
 public class SoundHandler {
-    private static Clip clip;
+    private static Clip clipDefaultSounds;
+    public static Clip clipBGSound;
     private static FloatControl volumeControl;
-    private static Clip backgroundSound = null;
+    private static boolean canPlayBGSound;
     public static void playSound(String soundFilePath) {
         try {
             File soundFile = new File(soundFilePath);
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);
-            clip = AudioSystem.getClip();
-            clip.open(audioInput);
+            clipDefaultSounds = AudioSystem.getClip();
+            clipDefaultSounds.open(audioInput);
             // Obter o controle de volume
-            volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            clip.start();
+            volumeControl = (FloatControl) clipDefaultSounds.getControl(FloatControl.Type.MASTER_GAIN);
+            clipDefaultSounds.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
     public static void playBackgourndSound(){
-        playBGLoopingSound("sounds/background_music.wav");
+        if(canPlayBGSound && clipBGSound == null){
+            playBGLoopingSound("sounds/background_music.wav");
+        }
     }
     private static void playBGLoopingSound(String soundFilePath) {
 
@@ -43,25 +46,25 @@ public class SoundHandler {
 
             File soundFile = new File(soundFilePath);
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);
-            clip = AudioSystem.getClip();
-            clip.open(audioInput);
+            clipBGSound = AudioSystem.getClip();
+            clipBGSound.open(audioInput);
 
             // Obter o controle de volume
-            volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl = (FloatControl) clipBGSound.getControl(FloatControl.Type.MASTER_GAIN);
             volumeControl.setValue(-20.0f);
             // Adicionar um LineListener para reiniciar o som quando terminar
-            clip.addLineListener(new LineListener() {
+            clipBGSound.addLineListener(new LineListener() {
                 @Override
                 public void update(LineEvent event) {
                     if (event.getType() == LineEvent.Type.STOP) {
                         event.getLine().close();
+                        clipBGSound = null;
                         playBGLoopingSound(soundFilePath);
                     }
                 }
             });
 
-            backgroundSound = clip;
-            clip.start();
+            clipBGSound.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
@@ -69,10 +72,16 @@ public class SoundHandler {
 
 
     public static void stopBackgroundSound() {
-        if(backgroundSound != null && backgroundSound.isRunning()){
-            backgroundSound.stop();
-            backgroundSound.close();
+        if(clipBGSound != null && clipBGSound.isRunning()){
+            clipBGSound.stop();
+            clipBGSound.close();
+            clipBGSound = null;
         }
+
+    }
+
+    public static void enableToPlayBGSound(boolean bool){
+        canPlayBGSound = bool;
     }
 
 }
