@@ -199,7 +199,7 @@ public class Player extends Entity {
     }
 
     public void decreaseLife() {
-        SoundHandler.playSound("sounds/damage.wav");
+        SoundHandler.playSound("damage.wav");
         this.lifes -= 1;
     }
 

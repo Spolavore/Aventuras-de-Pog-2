@@ -41,7 +41,7 @@ public class VictoryScreen {
     public void playVictorySounds() {
 
         if (!soundsIsPlaying) {
-            SoundHandler.playSound("sounds/victory_sound_effect.wav");
+            SoundHandler.playSound("victory_sound_effect.wav");
             soundsIsPlaying = true;
         }
     }

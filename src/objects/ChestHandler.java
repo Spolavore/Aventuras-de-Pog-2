@@ -95,7 +95,7 @@ public class ChestHandler {
             if (xCmp < xAcceptableDistance && yCmp < yAcceptableDistance && !currentChest.isOpened()) {
                 currentChest.changeTypeOfAnimation("opening");
                 ChestHandler.increaseChestOpened();
-                SoundHandler.playSound("sounds/coin_effect.wav");
+                SoundHandler.playSound("coin_effect.wav");
                 player.increaseScore(200);
                 player.setIsTryingtoOpenChest(false);
                 currentChest.setIsOpened(true);

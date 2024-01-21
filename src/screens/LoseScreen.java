@@ -38,7 +38,7 @@ public class LoseScreen {
 
     public void playLoseScreenSounds() {
         if (!soundsIsPlaying) {
-            SoundHandler.playSound("sounds/som_derrota.wav");
+            SoundHandler.playSound("som_derrota.wav");
             soundsIsPlaying = true;
         }
 

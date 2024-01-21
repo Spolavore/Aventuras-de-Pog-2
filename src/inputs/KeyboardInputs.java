@@ -185,7 +185,7 @@ public class KeyboardInputs implements KeyListener {
                     if (!player.isFalling()) {
                         if (!player.isJumping()) {
 
-                            SoundHandler.playSound("sounds/Retro Jump Classic.wav");
+                            SoundHandler.playSound("Retro Jump Classic.wav");
                         }
                         player.setJumping(true);
                     }

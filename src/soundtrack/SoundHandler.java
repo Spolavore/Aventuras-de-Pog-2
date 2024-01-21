@@ -1,7 +1,9 @@
 package soundtrack;
 
-import java.io.File;
-import java.io.IOException;
+// import java.io.File;
+// import java.io.IOException;
+// import java.io.InputStream;
+import java.io.*;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -23,8 +25,10 @@ public class SoundHandler {
     private static boolean canPlayBGSound;
     public static void playSound(String soundFilePath) {
         try {
-            File soundFile = new File(soundFilePath);
-            AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);
+            ClassLoader classLoader = SoundHandler.class.getClassLoader();
+
+            InputStream soundFile = classLoader.getResourceAsStream(soundFilePath);
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(new BufferedInputStream(soundFile));
             clipDefaultSounds = AudioSystem.getClip();
             clipDefaultSounds.open(audioInput);
             // Obter o controle de volume
@@ -37,15 +41,17 @@ public class SoundHandler {
 
     public static void playBackgourndSound(){
         if(canPlayBGSound && clipBGSound == null){
-            playBGLoopingSound("sounds/background_music.wav");
+            playBGLoopingSound("background_music.wav");
         }
     }
     private static void playBGLoopingSound(String soundFilePath) {
 
         try {
+            ClassLoader classLoader = SoundHandler.class.getClassLoader();
 
-            File soundFile = new File(soundFilePath);
-            AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);
+            InputStream soundFile = classLoader.getResourceAsStream(soundFilePath);
+            
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(new BufferedInputStream(soundFile));
             clipBGSound = AudioSystem.getClip();
             clipBGSound.open(audioInput);
 
